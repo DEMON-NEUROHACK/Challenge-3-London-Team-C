@@ -1,0 +1,73 @@
+---
+title: "GWAS_analysis"
+author: "Brian M. Schilder"
+date: "11/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, root.dir = here::here())
+knitr::opts_knit$set(echo = TRUE, root.dir = here::here())
+
+if(!require(remotes)) install.packages("remotes")
+
+if(!require(MungeSumstats)){
+    remotes::install_github("neurogenomics/MungeSumstats")
+}
+if(!require(MAGMA.Celltyping)){
+    remotes::install_github("neurogenomics/MAGMA.Celltyping@bschilder_dev")
+}
+
+
+library(dplyr)
+```
+
+# Import data
+
+## Phenotypes
+
+```{r}
+pheno <- readxl::read_excel("raw_data/phenotype/pheno_data.xlsx")
+```
+
+
+## GWAS
+
+### ALS/FTD summary stats
+
+```{r}
+topSS <- data.table::fread("https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-021-00973-1/MediaObjects/41588_2021_973_MOESM16_ESM.txt")
+```
+
+
+### Full summary stats
+
+```{r}
+gwas <- data.table::fread("raw_data/GWAS/ALS_sumstats_EUR_only.txt.gz")
+sig <- subset(gwas, p_value<5e-8)
+```
+
+### Top neurodegenerative disease summary stats
+
+```{r}
+topss <- data.table::fread("raw_data/GWAS/tableS21.csv") %>% 
+    data.table::merge.data.table(gwas %>% 
+                                     subset(rsid %in% topss$SNP) %>%
+                                     dplyr::mutate(SNP=rsid), 
+                                 by="SNP")
+data.table::fwrite(topss, "raw_data/GWAS/tableS21_coords.csv")
+```
+
+ 
+<hr> 
+
+# Session info
+
+<details>
+
+```{r}
+utils::sessionInfo()
+```
+
+</details>
+<br> 
