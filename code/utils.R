@@ -111,8 +111,20 @@ get_gene_counts <- function(gr_dt,
         gr_dt <- gr_dt %>% dplyr::rename(ensembl_gene_id =  gene_col)
         # gr_dt$ensembl_gene_id <- gr_dt[[gene_col]]
     }
-    gr_dt_long <- tidyr::unnest_longer(gr_dt, col = ensembl_gene_id )
-    subset(gr_dt_long)
+    
+    ensg <- lapply(gr_dt_long$ensembl_gene_id)
+    test <- gr_dt_long[1:10,] %>% 
+        dplyr::mutate(ensembl_gene_id=extract_ensg(ensembl_gene_id))
+    
+    gr_dt_long <- tidyr::unnest_longer(gr_dt, col = ensembl_gene_id)
+    
+    extract_ensg <- function(val){
+        # val = gr_dt_long$ensembl_gene_id[1]
+        # val <- paste(val,collapse = "|")
+        split <- strsplit(gsub("\\|+","|",val),"[|]")[[1]]
+        list(split[startsWith(split,"ENSG")])
+    }  
+    
     gene_counts <- gr_dt_long %>% 
         dplyr::mutate(GT_int = key[GT]) %>%
         # subset(length(ensembl_gene_id[[1]])>0) %>%
