@@ -1,32 +1,45 @@
 README
 ================
 <h4>
-README updated: <i>Jan-11-2022</i>
+README updated: <i>Jan-12-2022</i>
 </h4>
 
-# Challenge-3-London-Team-C
+# File descriptions
 
-## To do
+## [SNP\_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs)
 
-### Prepare input data
+### by\_variant/
 
-#### VCF
+### SNP\_VCFs.all.tsv.gz
 
--   [ ] Get locus coordinates from ALS GWAS.
--   [ ] Tabix-index each VCF.
--   [ ] Query each VCF.
--   [ ] Merge into one VCF.
+All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into one participant
+x variant matrix.
 
-#### Prepare additional input data
+The matrix is filled with genotypes numerically encoded as detailed
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/genotype_encodings.csv).
 
--   \[\]
--   \[\]
+### SNP\_VCFs.merged.tsv.gz
 
-### Train model
+All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into a `data.table`
+in long-format.
 
-### Map features to genes
+This is the data from which *SNP\_VCFs.all.tsv.gz* is derived.
 
-### Predict drugs
+## [HERVK\_Insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
+
+### HERV\_K\_Insertions.txt
+
+A dummy file with HERV\_K insertions for all 20 MND ALS dummy subjects.
+
+<hr>
+
+## Citation
+
+> van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common and
+> rare variant association analyses in amyotrophic lateral sclerosis
+> identify 15 risk loci with distinct genetic architectures and
+> neuron-specific biology. Nat Genet 53, 1636–1648 (2021).
+> <https://doi.org/10.1038/s41588-021-00973-1>
 
 <hr>
 
