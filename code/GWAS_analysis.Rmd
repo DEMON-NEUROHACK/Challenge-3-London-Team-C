@@ -43,19 +43,22 @@ topSS <- data.table::fread("https://static-content.springer.com/esm/art%3A10.103
 ### Full summary stats
 
 ```{r}
-gwas <- data.table::fread("raw_data/GWAS/ALS_sumstats_EUR_only.txt.gz")
+gwas <- data.table::fread("raw_data/GWAS/ALS_sumstats_EUR_ASIA.txt.gz")
 sig <- subset(gwas, p_value<5e-8)
+
 ```
 
 ### Top neurodegenerative disease summary stats
 
+Copy and pasted table from TableS21 in PDF: [Supplementary Info](https://static-content.springer.com/esm/art%3A10.1038%2Fs41588-021-00973-1/MediaObjects/41588_2021_973_MOESM1_ESM.pdf).
+ 
 ```{r}
-topss <- data.table::fread("raw_data/GWAS/tableS21.csv") %>% 
+topss <- data.table::fread("data/GWAS/tableS21.csv") %>% 
     data.table::merge.data.table(gwas %>% 
                                      subset(rsid %in% topss$SNP) %>%
                                      dplyr::mutate(SNP=rsid), 
                                  by="SNP")
-data.table::fwrite(topss, "raw_data/GWAS/tableS21_coords.csv")
+data.table::fwrite(topss, "data/GWAS/tableS21_coords.csv")
 ```
 
  

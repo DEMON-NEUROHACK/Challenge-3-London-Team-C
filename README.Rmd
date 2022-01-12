@@ -1,0 +1,45 @@
+---
+title: "README"
+date: "<h4>README updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
+output:
+  github_document
+---
+
+# Challenge-3-London-Team-C
+
+
+## To do 
+
+### Prepare input data
+
+#### VCF
+
+- [ ] Get locus coordinates from ALS GWAS. 
+- [ ] Tabix-index each VCF.
+- [ ] Query each VCF.
+- [ ] Merge into one VCF.  
+
+#### Prepare additional input data
+
+- [ ] 
+- [ ]
+
+### Train model  
+
+### Map features to genes 
+
+### Predict drugs 
+
+
+<hr> 
+
+# Session info
+
+<details>
+
+```{r}
+utils::sessionInfo()
+```
+
+</details>
+<br> 

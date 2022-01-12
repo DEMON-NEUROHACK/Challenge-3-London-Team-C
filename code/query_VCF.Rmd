@@ -1,0 +1,320 @@
+---
+title: "query_VCF"
+author: "Brian M. Schilder"
+date: "11/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, root.dir = here::here())
+knitr::opts_knit$set(echo = TRUE, root.dir = here::here())
+
+if(!require(remotes)) install.packages("remotes")
+if(!require(echotabix)) remotes::install_github("RajLabMSSM/echotabix")
+ 
+source(here::here("code/gene_length.R"))
+
+library(dplyr)
+library(ggplot2)
+
+root <- "/Volumes/Steelix/research/MND_ALS"
+```
+
+# Import data
+
+## Phenotypes 
+
+```{r}
+pheno <- readxl::read_excel("data/phenotype/pheno_data.xlsx")
+```
+
+
+## Import locus coordinates  
+ 
+```{r}
+topss <- data.table::fread("data/GWAS/tableS21_coords.csv") %>% 
+    dplyr::mutate(CHR=paste0("chr",chromosome),
+                  POS=base_pair_location)
+```
+
+## List VCFs
+
+```{r}
+snp_vcfs <- list.files(file.path(root,"SNP_VCFs"),".vcf$", 
+                      full.names = TRUE, recursive = TRUE)
+indel_vcfs <- list.files(file.path(root,"Indel_VCFs"),".vcf$", 
+                      full.names = TRUE, recursive = TRUE)
+sv_vcfs <- list.files(file.path(root,"SV_VCFs"),".vcf$", 
+                      full.names = TRUE, recursive = TRUE)
+```
+ 
+# Query one VCF 
+
+```{r}
+vcf <- vcfs[1]
+# Rsamtools::bgzip(vcf,overwrite = T)
+# bgz <- paste0(vcf,".bgz")
+# index_out <- VariantAnnotation::indexVcf(bgz)
+# header <-  MungeSumstats:::read_header(bgz)
+bp_distance <- 5e+05*1
+
+out <- VariantAnnotation::readVcf(file = vcf)
+out <- methods::as(methods::as(out,"VRanges"),"GRanges")
+
+
+queries <- lapply(topss$Name, function(locus){
+    message(locus)
+    topss_sub <- subset(topss, Name==locus)
+    dat <- rbind(topss_sub %>% 
+                           dplyr::mutate(POS=topss_sub$POS - bp_distance),
+                       topss_sub %>%
+                           dplyr::mutate(POS=topss_sub$POS + bp_distance)) %>%
+        dplyr::mutate(POS=as.integer(POS))
+    # out2 <- echotabix::query_vcf(dat = dat[,.(SNP,POS,CHR)], 
+    #                              vcf_url = index_out$path)
+    # out <- methods::as(methods::as(out,"VRanges"),"GRanges")
+    # out <- VariantAnnotation::scanVcf(file = vcf) 
+    overlap <- echoannot::granges_overlap(dat1 = dat, 
+                                          chrom_col.1 = "CHR",
+                                          start_col.1 = "POS", 
+                                          dat2 = out) %>%
+        data.frame() %>% data.table::data.table()
+     
+    return(overlap)
+    # 
+    # if(nrow(out@fixed)>0){
+    #     out_df <- MungeSumstats:::vcf2df(out)
+    #     return(out_df)
+    # } else {
+    #     return(out)
+    # } 
+}) %>% `names<-`(topss$Name) %>%
+    data.table::rbindlist(use.names = TRUE, idcol = "Locus")
+```
+
+# Merge VCF 
+
+Merge gene-level scores using 
+
+## Get metadata 
+
+```{r, eval=FALSE}
+vcf_list <- c(SNP=snp_vcfs[1], 
+              SV=sv_vcfs[1], 
+              Indel=indel_vcfs[1])
+
+vcf_cols <- lapply(names(vcf_list), function(x){
+    vcf_head <- VariantAnnotation::scanVcfHeader(vcf_list[[x]]) 
+    cols <- rbind(VariantAnnotation::info(vcf_head),
+                  VariantAnnotation::geno(vcf_head), 
+                  VariantAnnotation::fixed(vcf_head)[["FILTER"]] %>%
+                      data.frame() %>%
+                      dplyr::mutate(Number=NA, Type=NA)) %>%
+        data.frame() %>%
+        dplyr::mutate(vcf_type=x) 
+    cols <- cbind(Column=rownames(cols),cols)
+    return(cols)
+}) %>% do.call(what = "rbind") 
+utils::write.csv(vcf_cols, "data/VCF_cols.csv", row.names = FALSE)
+ 
+
+```
+
+
+## Structural Variants (SV)
+
+```{r}
+
+grl <- parallel::mclapply(sv_vcfs, function(vcf){
+    message(vcf)
+    out <- VariantAnnotation::readVcf(file = vcf)
+    out <- methods::as(methods::as(out,"VRanges"),"GRanges")
+    id <-  strsplit(basename(vcf),"[.]")[[1]][1]
+    names(out) <- paste(id,names(out),sep=":")
+    GenomicRanges::mcols(out)$id <- id
+    # out_dt <- data.table::data.table(data.frame(out))
+    # out_dt <- out_dt[,.(seqnames, start, end, width, strand, 
+    #                     QUAL, SVTYPE, ensembl_gene_id)]
+    out[,c("id","SVTYPE","SVLEN","ensembl_gene_id","QUAL","GT")]
+}, mc.cores = 10)
+
+# genotypes <- lapply(grl,function(x){
+#     # gr <- grl[[1]]
+# })
+gr_dt <- grl %>%
+    GenomicRanges::GRangesList() %>%
+    unlist() %>%
+    data.frame() %>%
+    data.table::data.table()
+     
+gr_dt_long <- tidyr::unnest_longer(gr_dt, col =ensembl_gene_id )
+
+gene_counts <- gr_dt_long %>% 
+    dplyr::mutate(GT_int = ifelse(GT== "./.", 1, 0)) %>%
+    # subset(length(ensembl_gene_id[[1]])>0) %>%
+    dplyr::group_by(id, SVTYPE, ensembl_gene_id) %>%
+    dplyr::summarise(QUAL = mean(QUAL,na.rm=TRUE), 
+                     GT_int = mean(GT_int, na.rm=TRUE), 
+                     SVLEN = mean(SVLEN, na.rm=TRUE)) %>%
+    data.table::data.table()
+
+
+# sv_gene_counts <- lapply(seq_len(nrow(gene_counts)), function(i){
+#     r <- gene_counts[i,]
+#     genes <- table(strsplit(r$genes, "[|]")[[1]]) 
+#     data.table::data.table(id=gsub(":|-","_",r$id),
+#                            SVTYPE=gsub(":|-","_",r$SVTYPE),
+#                            gene=as.character(names(genes)),
+#                            count=as.integer(unname(genes)), 
+#                            GT_int = r$GT_int,
+#                            SVLEN = r$SVLEN,
+#                            QUAL=r$QUAL)
+# }) %>% data.table::rbindlist() 
+scl <- function(x){
+    scales::rescale(x, to = c(0.000000001, 1))
+}
+gene_len <- gene_length(gene_list = unique(gene_counts$ensembl_gene_id))
+
+sv_gene_counts <- gene_counts %>% 
+    data.table::merge.data.table(gene_len, 
+                                 by.x="ensembl_gene_id", 
+                                 by.y = "ENSEMBL", 
+                                 all.x = TRUE) %>%
+    subset(!is.na(TXLENGTH)) %>%
+    dplyr::mutate_at(.vars = c("SVLEN","TXLENGTH"),
+                     .funs = abs) %>% 
+    dplyr::group_by(id, SVTYPE, ensembl_gene_id) %>% 
+    dplyr::summarise_at(.vars = c("GT_int","SVLEN","QUAL","TXLENGTH"),
+                        .funs = mean, na.rm = TRUE) %>%
+     dplyr::group_by(id, SVTYPE, ensembl_gene_id) %>% 
+     dplyr::summarise(GT_int = as.integer(GT_int),
+                      SVLEN = as.integer(SVLEN),
+                      QUAL = as.numeric(QUAL),
+                      TXLENGTH = as.integer(TXLENGTH),
+                      count = dplyr::n()) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(id__type=paste(id,SVTYPE,sep="__")) %>%
+    dplyr::mutate_at(.vars = c("count","GT_int","SVLEN","QUAL","TXLENGTH"), 
+                     .funs = list(z=scl)) %>%
+    data.table::data.table()
+
+model <- stats::lm(data = sv_gene_counts,
+          formula = GT_int ~ count + SVLEN + TXLENGTH + QUAL,
+          na.action = na.exclude)
+sv_gene_counts$score <- as.numeric(scales::rescale(log10(scl(stats::residuals(model)))))  
+sv_gene_counts$score[is.na(sv_gene_counts$score)] <- 0 
+hist(sv_gene_counts$score, breaks = 100)
+ 
+
+data_type <- "gene_genotypes"
+# data_type <- "gene_scores"
+types <- unique(sv_gene_counts$SVTYPE)
+remove_nonvarying <- TRUE
+mat_list <- lapply(types, function(type){ 
+    M <- data.table::dcast.data.table(
+        data = subset(sv_gene_counts, SVTYPE==type), 
+        # formula = id ~ SVTYPE,
+        formula = id__type ~ ensembl_gene_id,
+        fun.aggregate = "mean",
+        fill = 0,
+        drop = FALSE,
+        value.var = if(data_type=="gene_scores")"score"else{"GT_int"}, 
+        na.rm=TRUE) %>%
+    tibble::column_to_rownames("id__type") %>%
+    as.matrix() %>%
+    as("sparseMatrix")
+    #### Remove features that don't vary across participants ####
+    if(remove_nonvarying){
+        M <- M[,Matrix::colSums(M, na.rm = TRUE)>0]
+    }
+    message(type," : ",paste(dim(M),collapse = " x "))
+    return(M)
+}) %>% `names<-`(types)
+
+# mat <- do.call("cbind", mat_list)
+
+saveRDS(mat_list, paste0("data/SV_SNPs/SV_VCFs.",data_type,".rds"))
+
+# mat_list <- readRDS( "data/SV_SNPs/SV_SNPs.gene_scores.rds")
+# saveRDS(mat, "data/SV_SNPs/SV_SNPs.participant_scores.rds")
+data.table::fwrite(sv_gene_counts, "data/SV_SNPs/SV_VCFs.gene_scores.long.tsv.gz")
+```
+
+## Check how similar individuals are
+
+```{r} 
+cor_mat_list <- lapply(names(mat_list), function(x){
+    #### corr ####
+    mat <- mat_list[[x]]
+    cor_mat <- cor(as.matrix(Matrix::t(mat)))
+    cor_mat[is.na(cor_mat)] <- 0
+    diag(cor_mat) <- NA
+    ### plot ###
+    path <- paste0("figures/heatmaps/SV_",x,".",data_type,".pdf")
+    pdf(path)
+    heatmap(cor_mat, symm = TRUE)
+    dev.off()
+    cor_mat
+}) %>% `names<-`(names(mat_list))
+
+```
+
+## See whether cluster correspond to surival similarity
+
+```{r} 
+corr_pheno <-  cor_mat_list$DEL %>%
+    data.table::data.table(keep.rownames = "iid") %>%
+    data.table::melt.data.table(variable.name = "iid2", value.name = "corr") %>%
+    dplyr::mutate_at(.vars = c("iid","iid2"),
+                     .funs = function(x){gsub("__.*$","",x)}) %>%
+    data.table::merge.data.table(data.table::data.table(pheno),
+                                 by.x = "iid2",
+                                 by.y = "iid") %>%
+    subset(iid!=iid2) %>% 
+    unique() 
+
+ggplot(data=corr_pheno,
+       aes(x=corr, y=Phe3_Surv_years, 
+           color= PheFemale_Sex, size = Phe3_Surv_years)) +
+    geom_point(alpha=.6) +
+    geom_smooth(method = "lm") +
+    ggpubr::stat_cor() +
+    # ggpubr::stat_compare_means() +
+    theme_bw()
+
+```
+```{r}
+
+rsums <- Matrix::rowSums(mat_list$INV)
+sum_pheno <-  data.table::data.table(score=rsums,
+                                     iid=names(rsums)) %>% 
+    dplyr::mutate_at(.vars = c("iid"),
+                     .funs = function(x){gsub("__.*$","",x)}) %>%
+    data.table::merge.data.table(data.table::data.table(pheno),
+                                 by = "iid") %>% 
+    unique()
+
+
+ggplot(data=sum_pheno,
+       aes(x=score, y=Phe3_Surv_years, 
+           color= PheFemale_Sex, size = Phe3_Surv_years)) +
+    geom_point(alpha=.6) +
+    geom_smooth(method = "lm") +
+    ggpubr::stat_cor() +
+    # ggpubr::stat_compare_means() +
+    theme_bw()
+```
+
+
+<hr> 
+
+# Session info
+
+<details>
+
+```{r}
+utils::sessionInfo()
+```
+
+</details>
+<br> 
