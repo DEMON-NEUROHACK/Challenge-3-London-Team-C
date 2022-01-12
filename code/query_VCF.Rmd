@@ -124,13 +124,13 @@ utils::write.csv(vcf_cols, "data/VCF_cols.csv", row.names = FALSE)
 ## Structural Variants (SV)
 
 ```{r}
-
+all_ids <-  stringr::str_split(basename(sv_vcfs),"[.]",simplify = T)[,1]
 grl <- parallel::mclapply(sv_vcfs, function(vcf){
     message(vcf)
     out <- VariantAnnotation::readVcf(file = vcf)
     out <- methods::as(methods::as(out,"VRanges"),"GRanges")
     id <-  strsplit(basename(vcf),"[.]")[[1]][1]
-    names(out) <- paste(id,names(out),sep=":")
+    # names(out) <- paste(id,names(out),sep=":")
     GenomicRanges::mcols(out)$id <- id
     # out_dt <- data.table::data.table(data.frame(out))
     # out_dt <- out_dt[,.(seqnames, start, end, width, strand, 
@@ -138,9 +138,29 @@ grl <- parallel::mclapply(sv_vcfs, function(vcf){
     out[,c("id","SVTYPE","SVLEN","ensembl_gene_id","QUAL","GT")]
 }, mc.cores = 10)
 
-# genotypes <- lapply(grl,function(x){
-#     # gr <- grl[[1]]
-# })
+sv_types <- unique(grl[[1]]$SVTYPE)
+genotypes_list <- lapply(sv_types, function(x){
+    mat <- lapply(grl,function(gr){
+    # gr <- grl[[1]]
+    gr <- subset(gr, SVTYPE==x)
+    GenomicRanges::mcols(gr)$GT_int <- ifelse(gr$GT== "./.", 1, 0)
+    vec <- gr$GT_int %>% `names<-`(names(gr)) 
+    return(vec)
+}) %>%
+    `names<-`(all_ids) %>% 
+    do.call(what = "cbind") %>%
+    as("sparseMatrix") %>%
+    Matrix::t()
+    data.table::fwrite(data.table::data.table(as.matrix(mat), keep.rownames = "id"),
+                       paste0("data/SV_SNPs/by_variant/SV_VCFs.",gsub(":","-",x),".tsv.gz"), 
+                       sep="\t")
+    message(x," : ",paste(dim(mat),collapse = " x "))
+    return(mat)
+}) %>% `names<-`(sv_types)
+# saveRDS(genotypes_list,file = "data/SV_SNPs/SV_VCFs.genotypes.rds")
+
+
+
 gr_dt <- grl %>%
     GenomicRanges::GRangesList() %>%
     unlist() %>%
