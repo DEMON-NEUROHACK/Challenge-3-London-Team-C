@@ -6,7 +6,7 @@ README updated: <i>Jan-12-2022</i>
 
 # File descriptions
 
-## [SNP\_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs)
+## [data/SNP\_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs)
 
 ### by\_variant/
 
@@ -25,7 +25,7 @@ in long-format.
 
 This is the data from which *SNP\_VCFs.all.tsv.gz* is derived.
 
-## [HERVK\_Insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
+## [data/HERVK\_Insertions/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
 
 ### HERV\_K\_Insertions.txt
 

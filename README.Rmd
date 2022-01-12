@@ -7,7 +7,7 @@ output:
 
 # File descriptions 
  
-## [SNP_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs) 
+## [data/SNP_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs) 
 
 ### by_variant/
 
@@ -24,7 +24,7 @@ All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into a `data.table` in long-fo
 This is the data from which *SNP_VCFs.all.tsv.gz* is derived.  
 
 
-## [HERVK_Insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)  
+## [data/HERVK_Insertions/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)  
 
 ### HERV_K_Insertions.txt 
 
