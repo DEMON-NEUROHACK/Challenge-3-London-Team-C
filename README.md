@@ -31,6 +31,7 @@ This is the data from which *SNP\_VCFs.all.tsv.gz* is derived.
 
 Predicted HERV\_K insertions for all 20 MND ALS subjects. Predictions were obtained by running a tool Retroseq on 20 whole genome sequences of our ALS subjects
 
+Details for HERV_K insertiion pipleine: https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions
 <hr>
 
 ## Citation
