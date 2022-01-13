@@ -13,5 +13,23 @@ This should result in 20 vcf files, one for each BAM.
 
 # To aggregate these into a matrix
 
-```python aggregate.py > HERVKMatrixforMode1.txt```
+```python aggregate.py > HERVKMatrixforModel.txt```
 
+Dependencies:
+```
+list.txt
+```
+which lists the samples
+
+And the three pythong scripts in Challenge-3-London-Team-C/data/HERVK_Insertions
+```
+aggregate.py
+combineSidewise.py
+extractColumn.py
+filter.py
+```
+
+# If one sample is missing:
+Remove the missing sample name from list.txt and manually edit the resulting HERVKMatrixforModel.txt to add one row with the missing sample name and fill it with NA
+
+#Copy the resulting HERVKMatrixforModel.txt in DNANexus folder c3_london_c/model_input
