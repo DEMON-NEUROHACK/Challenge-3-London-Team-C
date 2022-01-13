@@ -27,6 +27,7 @@ root <- "/Volumes/Steelix/research/MND_ALS"
 
 ```{r}
 pheno <- readxl::read_excel("data/phenotype/pheno_data.xlsx")
+data.table::fwrite(pheno,"data/phenotype/pheno_data.tsv", sep="\t")
 ```
 
 
@@ -123,7 +124,9 @@ utils::write.csv(vcf_cols, "data/VCF_cols.csv", row.names = FALSE)
 
 
 
-## Structural Variants (SV)
+## SVs
+
+Process Structural Variants (SVs) at the variant- and gene- levels. 
 
 ```{r}
 all_ids <- vcfs2ids(vcfs = sv_vcfs)
@@ -150,14 +153,14 @@ mat_list <- create_gene_matrix(gene_counts = gene_counts,
 # data.table::fwrite(gene_counts, "data/SV_VCFs/by_gene/SV_VCFs.gene_scores.long.tsv.gz")
 ```
 
-## Participant similarity 
+### Participant similarity 
 
 ```{r} 
 cor_mat_list <- create_corr_heatmaps(mat_list = mat_list,
                                      data_type = data_type)
 ```
 
-## See whether cluster correspond to survival similarity
+### See whether cluster correspond to survival similarity
 
 ```{r} 
 corr_pheno <-  cor_mat_list$DEL %>%
@@ -204,7 +207,34 @@ ggplot(data=sum_pheno,
 ```
 
 
+## Indels 
+ 
+```{r}
+all_ids <- vcfs2ids(vcfs = indel_vcfs)
 
+vcf=VariantAnnotation::readVcf(indel_vcfs[1])
+
+#### Create variant-level matrices ####
+mat <- genotype_matrix(vcfs = indel_vcfs, 
+                                  structural_variants = TRUE,
+                                          save_prefix = "data/Indel_VCFs/by_variant/Indel_VCFs")
+
+#### Create gene-level matrices ####
+grl <- gather_vcfs(vcfs = sv_vcfs,
+                   cols=c("id","SVTYPE","SVLEN","ensembl_gene_id","QUAL","GT"))
+gr_dt <- merge_vcfs(grl = grl)
+gene_counts <- get_gene_counts(gr_dt = gr_dt)
+gene_counts <- add_gene_length(gene_counts = gene_counts)
+gene_counts <- add_gene_score(gene_counts = gene_counts)
+### Save matrices 
+data_type <- "gene_scores" # gene_scores"
+mat_list <- create_gene_matrix(gene_counts = gene_counts,
+                               grouping_var = "SVTYPE",
+                               data_type = data_type, 
+                               save_prefix = "data/SV_VCFs/by_gene/SV_VCFs")
+# mat <- do.call("cbind", mat_list)
+# data.table::fwrite(gene_counts, "data/SV_VCFs/by_gene/SV_VCFs.gene_scores.long.tsv.gz")
+```
 
 
 
@@ -217,7 +247,8 @@ mat <- genotype_matrix(vcfs = snp_vcfs,
                        save_prefix="data/SNP_VCFs/by_variant/SNP_VCFs")
 
 grl <- gather_vcfs(vcfs = snp_vcfs)
-gr_dt <- merge_vcfs(grl = grl)
+gr_dt <- merge_vcfs(grl = grl, 
+                    save_prefix = "data/SNP_VCFs/by_variant/SNP_VCFs")
 gene_counts <- get_gene_counts(gr_dt = gr_dt, 
                                gene_col = "CSQ", 
                                extract_string = "ENSG")

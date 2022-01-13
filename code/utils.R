@@ -58,7 +58,7 @@ genotype_matrix <- function(vcfs,
       vcf <- vcf_file
     } else {
       message_parallel("Reading: ",vcf_file)
-      VariantAnnotation::readVcf(vcf_file)
+      vcf <- VariantAnnotation::readVcf(vcf_file)
     }
     message_parallel("Parsing: ",nm)
     #### Extract encoded genotypes ####
@@ -94,39 +94,86 @@ save_matrix <- function(mat,
                         group = NULL){
   #### Save matrix ####
   if(!is.null(save_prefix)){
-    if(group=="all") group <- NULL
-    save_path <- paste0(save_prefix,
-                        if(!is.null(group)) paste0(".",group) else NULL,
-                        paste0(".",suffix,".tsv.gz"))
-    save_path <- gsub(":","-",save_path)
-    dir.create(dirname(save_path), 
-               showWarnings = FALSE, recursive = TRUE)
-    message_parallel("Saving ==> ",save_path)
-    data.table::fwrite(
-      x = data.table::data.table(as.matrix(mat),
-                                 keep.rownames = "id"),
-      file = save_path, 
-      sep="\t")
+    try({
+      if(any(group=="all")) group <- NULL
+      save_path <- paste0(save_prefix,
+                          if(!is.null(group)) paste0(".",group) else NULL,
+                          paste0(".",suffix,".tsv.gz"))
+      save_path <- gsub(":","-",save_path)
+      dir.create(dirname(save_path), 
+                 showWarnings = FALSE, recursive = TRUE)
+      message_parallel("Saving ==> ",save_path)
+      data.table::fwrite(
+        x = data.table::data.table(as.matrix(mat),
+                                   keep.rownames = "id"),
+        file = save_path, 
+        sep="\t") 
+    })
+    
   } 
 }
 
+
+
+add_alleles <- function(vcf,
+                        dat){
+  snpmat <- suppressMessages(suppressWarnings(VariantAnnotation::genotypeToSnpMatrix(vcf)))
+  dat$A1 <- as.character(snpmat$map$allele.1) 
+  a2 <- snpmat$map$allele.2
+  names(a2) <-  snpmat$map$snp.names 
+  a2 <- as.character( unlist(a2)) 
+  dat$A2 <- a2[rownames(dat)]
+  return(dat)
+}
+
+
+
+vcf2dt <- function(vcf, 
+                   add_alleles = TRUE,
+                   as_granges = FALSE){
+  # gr <- methods::as(methods::as(vcf,"VRanges"),"GRanges")
+  ranges <- vcf@rowRanges
+  inf <- VariantAnnotation::info(vcf)
+  gen <- VariantAnnotation::geno(vcf) 
+  nms <- names(vcf)
+  dat <- cbind(CHR=GenomicRanges::seqnames(ranges),
+               START=GenomicRanges::start(ranges),
+               END=GenomicRanges::end(ranges),
+               name=nms,
+               inf,
+               GT=as.vector(gen$GT)
+               ) %>% `rownames<-`(nms) 
+  if(add_alleles){
+    dat <- add_alleles(vcf = vcf,
+                       dat = dat)
+  }
+  if(as_granges){ 
+    gr <- GenomicRanges::makeGRangesFromDataFrame(df = data.frame(dat),
+                                                  seqnames.field = "CHR",
+                                                  start.field = "START",
+                                                  end.field = "END", 
+                                                  keep.extra.columns = TRUE)
+    return(gr)
+  } else {
+    return(dat)
+  }
+}
 
 encode_structural_variants <- function(vcf,
                                        key = get_key(),
                                        genotype_col = "GT",
                                        grouping_var = NULL,
                                        group = NULL){
-  gr <-  methods::as(vcf,"VRanges")
+  # gr <-  methods::as(vcf,"VRanges") 
+  #### Converting the file to df this way is far more efficient than methods::as() ####
+  dat <- vcf2dt(vcf = vcf)
   #### Subset to just one type #####
-  if(is.null(grouping_var)){
-    GenomicRanges::mcols(gr)$all <- "all"
-  } else {
-    gr <- gr[GenomicRanges::mcols(gr)[[grouping_var]]==group,]
+  if(!is.null(grouping_var)){
+    dat <- dat[dat[[grouping_var]]==group,]
   } 
   #### Make genotype numeric #### 
-  GenomicRanges::mcols(gr)$GT_int <- 
-    key[GenomicRanges::mcols(gr)[[genotype_col]]]
-  vec <- gr$GT_int %>% `names<-`(names(gr)) 
+  dat$GT_int <- key[dat[[genotype_col]]]
+  vec <- dat$GT_int %>% `names<-`(rownames(dat)) 
   return(vec)
 }
 
@@ -139,7 +186,9 @@ gather_vcfs <- function(vcfs,
     grl <- parallel::mclapply(vcfs, function(vcf_file){
         message_parallel("Reading: ",vcf_file)
         vcf <- VariantAnnotation::readVcf(file = vcf_file)
-        gr <- methods::as(methods::as(vcf,"VRanges"),"GRanges")
+        gr <- vcf2dt(vcf = vcf,
+                      add_alleles = TRUE,
+                      as_granges = TRUE) 
         GenomicRanges::mcols(gr)$id <- vcfs2ids(vcf_file)  
         if(!is.null(cols)){
             cols <- cols[cols %in% colnames(GenomicRanges::mcols(gr))]
@@ -325,6 +374,9 @@ create_gene_matrix <- function(gene_counts,
   } else {
     groups <- unique(gene_counts[[grouping_var]])
   }
+  gene_counts <- gene_counts %>% 
+    dplyr::mutate(id__type=trimws(paste(id,grouping_var,sep="__"),whitespace = "__")) #%>%
+    
   #### Iterate over groups ####
   mat_list <- lapply(groups, function(group){ 
     if(group!="all") message("Group: ",group)
