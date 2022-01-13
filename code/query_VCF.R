@@ -46,10 +46,6 @@ indel_vcfs <- list.files(file.path(root,"Indel_VCFs"),".vcf$",
 sv_vcfs <- list.files(file.path(root,"SV_VCFs"),".vcf$", 
                       full.names = TRUE, recursive = TRUE)
  
-#### Source custom functions from R scripts ####
-source(here::here("code/gene_length.R"))
-source(here::here("code/utils.R"))
-
 
 #### ------------------------------------------ ####
 #### ------------------------------------------ ####

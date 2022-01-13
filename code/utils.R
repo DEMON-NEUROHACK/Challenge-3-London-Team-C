@@ -216,7 +216,7 @@ merge_vcfs <- function(grl,
                    showWarnings = FALSE, recursive = TRUE)
         message("Saving ==> ",save_path)
         data.table::fwrite(
-            x = data.table::data.table(as.matrix(mat),
+            x = data.table::data.table(gr_dt,
                                        keep.rownames = "id"),
             file = save_path, 
             sep="\t")

@@ -9,8 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE, root.dir = here::here())
 knitr::opts_knit$set(echo = TRUE, root.dir = here::here())
 
-if(!require(remotes)) install.packages("remotes")
-if(!require(echotabix)) remotes::install_github("RajLabMSSM/echotabix")
+if(!require(remotes)) install.packages("remotes") 
  
 source(here::here("code/gene_length.R"))
 source(here::here("code/utils.R"))
@@ -243,8 +242,6 @@ mat_list <- create_gene_matrix(gene_counts = gene_counts,
 ## SNPs
 
 ```{r}
-all_ids <- vcfs2ids(vcfs = snp_vcfs)
-
 mat_var <- genotype_matrix(vcfs = snp_vcfs,
                        save_prefix="data/SNP_VCFs/by_variant/SNP_VCFs")
 

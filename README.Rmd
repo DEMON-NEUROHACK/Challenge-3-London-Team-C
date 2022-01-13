@@ -16,9 +16,6 @@ members <- readxl::read_excel("presentations/team_members.xlsx")
 DT::datatable(members)
 ```
 
-
-
-
 ### Project title 
 
 Predicting ALS drug targets using integrative multi-modal machine learning 
@@ -76,13 +73,13 @@ Retroviral insertions were identified using the pipeline described [here](https:
 
 ### Dimensionality reduction model 
 
-[description here]
+[PCA/autoencoder description here by @Hanz]
 
 **Figure 1.**:  
 
 ![](figures/models/autoencoder.png)
 
-### Classifier moel 
+### Classifier model 
 
 Each input modality (datatype) was fed into an supervised fully-connected artificial neural network (ANN), such that each participant is a sample and each gene/variant/annotation is a feature. The inputs of the model are initially partitioned into separate "channels" of the model input, and are reduced in dimensionality by the subsequent layers. Next, the reduced representation from each modality are concatenated into a single vector (layer 3 in **Fig. 2** below). Finally, the data is further compressed to predict which phenotypic category each participant belongs to. 
 
