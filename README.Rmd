@@ -1,23 +1,19 @@
 ---
-title: "README"
+title: "NEUROHACK 2022 "
 date: "<h4>README updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
 output:
-  github_document
+  html_document
 ---
-
-
-
-# NEUROHACK 2022 
 
 ## Team 
 
-![](figures/logo/team_logo.pdf) 
+![](figures/logo/team_logo.png) 
 
 ### Members  
 
 ```{r}
 members <- readxl::read_excel("presentations/team_members.xlsx")
-knitr::kable(members)
+DT::datatable(members)
 ```
 
 

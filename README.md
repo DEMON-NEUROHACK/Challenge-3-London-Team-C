@@ -8,44 +8,43 @@ README updated: <i>Jan-13-2022</i>
 
 ## Team
 
-![](figures/logo/team_logo.pdf)
+![](figures/logo/team_logo.png)
 
 ### Members
 
 ``` r
 members <- readxl::read_excel("presentations/team_members.xlsx")
-knitr::kable(members)
+# knitr::kable(members)
+data.table::data.table(members)
 ```
 
-| Name           | Affiliation             | Expertise      | Roles |
-|:---------------|:------------------------|:---------------|:------|
-| Brian Schilder | Imperial College London | Bioinformatics |       |
-
-Evolutionary biology Neuroscience Machine learning GWAS summary
-statistics Fine-mapping eQTL colocalization Matrix decomposition
-Single-cell RNA-seq R, Python, web dev \|Team lead. SV/SNP/Indel data
-preprocessing (variant and gene levels). Presentation
-creation/presenting. \| \|Yizhou Yu \|University of Cambridge \|Bioinfo
-Wet lab (cell culture) ML SNP data Molecular modelling / virtual drug
-screening / structural bio \|Preprocessing of functional impact
-predictions from deep learning models (DeepSEA, Basenj). Virtual drug
-screening. \| \|Hanz Tantiangco \|University of Sheffield 
-\|Computational chemistry Drug discovery Deep learning (Pytorch)
-Neuroscience (some) bioinformatics Python, R \|Assist in classifier
-model design. Explore dimensionality reduction/feature prioritization
-pre-step with PCA and autencoder. \| \|Areda Elezi \|Crick Institute
-\|Bioinformatics Nexflow pipelines (RNAseq etc) Web and software dev Wet
-lab Basic ML Python \|Search for additional data modalities. Prepare
-Expansion Hunter script. \| \|Siddharth Grover \|Indian Institute of
-Technology \|Machine Learning Data Mining Python, C++ \|Assist in
-classifier model design. \| \|Davide Spalla \|Donders Institute
-\|Machine learning Neuroscience Python Data analysis/visualization
-\|Design and train classifier model. \| \|Guan Wang \|University of
-Brighton \|GWAS analysis Bulk RNA-seq data analysis (short-reads)
-Population genetics; genomics \|Preprocess combined SNP-to-gene model
-(cS2G) data. \| \|Renata Kabiljo \|King’s College London \|NGS Data
-Analysis Python, R General Bioinformatics \|Generate and preprocess
-retroviral insertion predictions. \|
+    ##                Name                    Affiliation
+    ## 1:   Brian Schilder        Imperial College London
+    ## 2:        Yizhou Yu        University of Cambridge
+    ## 3:  Hanz Tantiangco       University of Sheffield 
+    ## 4:      Areda Elezi                Crick Institute
+    ## 5: Siddharth Grover Indian Institute of Technology
+    ## 6:    Davide Spalla              Donders Institute
+    ## 7:        Guan Wang         University of Brighton
+    ## 8:   Renata Kabiljo          King’s College London
+    ##                                                                                                                                                                                                            Expertise
+    ## 1: Bioinformatics\r\nEvolutionary biology\r\nNeuroscience\r\nMachine learning\r\nGWAS summary statistics\r\nFine-mapping\r\neQTL colocalization\r\nMatrix decomposition\r\nSingle-cell RNA-seq\r\nR, Python, web dev
+    ## 2:                                                                                             Bioinfo\r\nWet lab (cell culture)\r\nML \r\nSNP data\r\nMolecular modelling / virtual drug screening / structural bio
+    ## 3:                                                                                        Computational chemistry\r\nDrug discovery\r\nDeep learning (Pytorch)\r\nNeuroscience\r\n(some) bioinformatics\r\nPython, R
+    ## 4:                                                                                                        Bioinformatics\r\nNexflow pipelines (RNAseq etc)\r\nWeb and software dev\r\nWet lab\r\nBasic ML \r\nPython
+    ## 5:                                                                                                                                                                    Machine Learning\r\nData Mining\r\nPython, C++
+    ## 6:                                                                                                                                         Machine learning\r\nNeuroscience\r\nPython\r\nData analysis/visualization
+    ## 7:                                                                                                                        GWAS analysis\r\nBulk RNA-seq data analysis (short-reads)\r\nPopulation genetics; genomics
+    ## 8:                                                                                                                                                          NGS Data Analysis\r\nPython, R\r\nGeneral Bioinformatics
+    ##                                                                                                                              Roles
+    ## 1:                 Team lead. \r\nSV/SNP/Indel data preprocessing (variant and gene levels). \r\nPresentation creation/presenting.
+    ## 2:         Preprocessing of functional impact predictions from deep learning models (DeepSEA, Basenj). \r\nVirtual drug screening.
+    ## 3: Assist in classifier model design.\r\nExplore dimensionality reduction/feature prioritization pre-step with PCA and autencoder.
+    ## 4:                                                      Search for additional data modalities.\r\nPrepare Expansion Hunter script.
+    ## 5:                                                                                              Assist in classifier model design.
+    ## 6:                                                                                              Design and train classifier model.
+    ## 7:                                                                              Preprocess combined SNP-to-gene model (cS2G) data.
+    ## 8:                                                                       Generate and preprocess retroviral insertion predictions.
 
 ### Project title
 
@@ -222,13 +221,13 @@ utils::sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.7       fansi_1.0.0      crayon_1.4.2     utf8_1.2.2      
-    ##  [5] digest_0.6.29    cellranger_1.1.0 lifecycle_1.0.1  magrittr_2.0.1  
-    ##  [9] evaluate_0.14    highr_0.9        pillar_1.6.4     rlang_0.4.12    
-    ## [13] stringi_1.7.6    readxl_1.3.1     vctrs_0.3.8      ellipsis_0.3.2  
-    ## [17] rmarkdown_2.11   tools_4.1.0      stringr_1.4.0    xfun_0.29       
-    ## [21] yaml_2.2.1       fastmap_1.1.0    compiler_4.1.0   pkgconfig_2.0.3 
-    ## [25] htmltools_0.5.2  knitr_1.37       tibble_3.1.6
+    ##  [1] Rcpp_1.0.7        fansi_1.0.0       crayon_1.4.2      utf8_1.2.2       
+    ##  [5] digest_0.6.29     cellranger_1.1.0  lifecycle_1.0.1   magrittr_2.0.1   
+    ##  [9] evaluate_0.14     pillar_1.6.4      rlang_0.4.12      stringi_1.7.6    
+    ## [13] readxl_1.3.1      data.table_1.14.2 vctrs_0.3.8       ellipsis_0.3.2   
+    ## [17] rmarkdown_2.11    tools_4.1.0       stringr_1.4.0     xfun_0.29        
+    ## [21] yaml_2.2.1        fastmap_1.1.0     compiler_4.1.0    pkgconfig_2.0.3  
+    ## [25] htmltools_0.5.2   knitr_1.37        tibble_3.1.6
 
 </details>
 
