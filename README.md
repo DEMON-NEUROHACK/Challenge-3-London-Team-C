@@ -34,7 +34,7 @@ Predicted HERV\_K insertions for all 20 MND ALS subjects. Predictions were obtai
 Details for HERV_K insertiion pipleine: https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions
 <hr>
 
-## Citation
+## Citations
 
 > van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common and
 > rare variant association analyses in amyotrophic lateral sclerosis
@@ -42,7 +42,8 @@ Details for HERV_K insertiion pipleine: https://github.com/DEMON-NEUROHACK/Chall
 > neuron-specific biology. Nat Genet 53, 1636–1648 (2021).
 > <https://doi.org/10.1038/s41588-021-00973-1>
 
-Li. et al (2019) Human endogenous retrovirus-K contributes to motor neuron disease. Sci Transl Med. 2015 Sep 30; 7(307): 307ra153. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6344353/
+> Li. et al (2019) Human endogenous retrovirus-K contributes to motor neuron disease. Sci Transl Med. 2015 Sep 30; 7(307): 307ra153. 
+>  <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6344353/>
 
 
 <hr>
