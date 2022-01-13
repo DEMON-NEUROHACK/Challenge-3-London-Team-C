@@ -13,6 +13,7 @@ if(!require(remotes)) install.packages("remotes")
 if(!require(echotabix)) remotes::install_github("RajLabMSSM/echotabix")
  
 source(here::here("code/gene_length.R"))
+source(here::here("code/utils.R"))
 
 library(dplyr)
 library(ggplot2)
@@ -127,74 +128,36 @@ utils::write.csv(vcf_cols, "data/VCF_cols.csv", row.names = FALSE)
 ```{r}
 all_ids <- vcfs2ids(vcfs = sv_vcfs)
 
+#### Create variant-level matrices ####
+genotypes_list <- genotype_matrix_grouped(vcfs = sv_vcfs, 
+                                          grouping_var = "SVTYPE",
+                                          save_prefix = "data/SV_VCFs/by_variant/SV_VCFs")
+
+#### Create gene-level matrices ####
 grl <- gather_vcfs(vcfs = sv_vcfs,
                    cols=c("id","SVTYPE","SVLEN","ensembl_gene_id","QUAL","GT"))
-genotypes_list <- genotype_matrices(
-    grl = grl,
-    grouping_var = "SVTYPE",
-    save_prefix="data/SV_VCFs/by_variant/SV_VCFs")  
-
 gr_dt <- merge_vcfs(grl = grl)
 gene_counts <- get_gene_counts(gr_dt = gr_dt)
-
-sv_gene_counts <- add_gene_length(gene_counts = gene_counts)
-sv_gene_counts <- add_gene_score(sv_gene_counts = sv_gene_counts)
- 
-
-data_type <- "gene_genotypes"
-# data_type <- "gene_scores"
-types <- unique(sv_gene_counts$SVTYPE)
-remove_nonvarying <- TRUE
-mat_list <- lapply(types, function(type){ 
-    M <- data.table::dcast.data.table(
-        data = subset(sv_gene_counts, SVTYPE==type), 
-        # formula = id ~ SVTYPE,
-        formula = id__type ~ ensembl_gene_id,
-        fun.aggregate = "mean",
-        fill = 0,
-        drop = FALSE,
-        value.var = if(data_type=="gene_scores")"score"else{"GT_int"}, 
-        na.rm=TRUE) %>%
-    tibble::column_to_rownames("id__type") %>%
-    as.matrix() %>%
-    as("sparseMatrix")
-    #### Remove features that don't vary across participants ####
-    if(remove_nonvarying){
-        M <- M[,Matrix::colSums(M, na.rm = TRUE)>0]
-    }
-    message(type," : ",paste(dim(M),collapse = " x "))
-    return(M)
-}) %>% `names<-`(types)
-
+gene_counts <- add_gene_length(gene_counts = gene_counts)
+gene_counts <- add_gene_score(gene_counts = gene_counts)
+### Save matrices 
+data_type <- "gene_scores" # gene_scores"
+mat_list <- create_gene_matrix(gene_counts = gene_counts,
+                               grouping_var = "SVTYPE",
+                               data_type = data_type, 
+                               save_prefix = "data/SV_VCFs/by_gene/SV_VCFs")
 # mat <- do.call("cbind", mat_list)
-
-saveRDS(mat_list, paste0("data/SV_VCFs/SV_VCFs.",data_type,".rds"))
-
-# mat_list <- readRDS( "data/SV_SNPs/SV_SNPs.gene_scores.rds")
-# saveRDS(mat, "data/SV_SNPs/SV_SNPs.participant_scores.rds")
-data.table::fwrite(sv_gene_counts, "data/SV_SNPs/SV_VCFs.gene_scores.long.tsv.gz")
+# data.table::fwrite(gene_counts, "data/SV_VCFs/by_gene/SV_VCFs.gene_scores.long.tsv.gz")
 ```
 
-## Check how similar individuals are
+## Participant similarity 
 
 ```{r} 
-cor_mat_list <- lapply(names(mat_list), function(x){
-    #### corr ####
-    mat <- mat_list[[x]]
-    cor_mat <- cor(as.matrix(Matrix::t(mat)))
-    cor_mat[is.na(cor_mat)] <- 0
-    diag(cor_mat) <- NA
-    ### plot ###
-    path <- paste0("figures/heatmaps/SV_",x,".",data_type,".pdf")
-    pdf(path)
-    heatmap(cor_mat, symm = TRUE)
-    dev.off()
-    cor_mat
-}) %>% `names<-`(names(mat_list))
-
+cor_mat_list <- create_corr_heatmaps(mat_list = mat_list,
+                                     data_type = data_type)
 ```
 
-## See whether cluster correspond to surival similarity
+## See whether cluster correspond to survival similarity
 
 ```{r} 
 corr_pheno <-  cor_mat_list$DEL %>%
@@ -220,7 +183,7 @@ ggplot(data=corr_pheno,
 ```
 ```{r}
 
-rsums <- Matrix::rowSums(mat_list$INV)
+rsums <- Matrix::rowSums(mat_list$DEL)
 sum_pheno <-  data.table::data.table(score=rsums,
                                      iid=names(rsums)) %>% 
     dplyr::mutate_at(.vars = c("iid"),
@@ -241,23 +204,34 @@ ggplot(data=sum_pheno,
 ```
 
 
+
+
+
+
 ## SNPs
 
 ```{r}
 all_ids <- vcfs2ids(vcfs = snp_vcfs)
 
+mat <- genotype_matrix(vcfs = snp_vcfs,
+                       save_prefix="data/SNP_VCFs/by_variant/SNP_VCFs")
+
 grl <- gather_vcfs(vcfs = snp_vcfs)
-genotypes_list <- genotype_matrices(
-    grl = grl,
-    grouping_var = NULL,
-    save_prefix="data/SNP_VCFs/by_variant/SNP_VCFs")  
-
 gr_dt <- merge_vcfs(grl = grl)
-gene_counts <- get_gene_counts(gr_dt = gr_dt)
+gene_counts <- get_gene_counts(gr_dt = gr_dt, 
+                               gene_col = "CSQ", 
+                               extract_string = "ENSG")
+gene_counts <- add_gene_length(gene_counts = gene_counts)
+gene_counts <- add_gene_score(gene_counts = gene_counts,
+                              formula_str = "GT_int ~ count + TXLENGTH + QUAL" )
 
-sv_gene_counts <- add_gene_length(gene_counts = gene_counts)
-sv_gene_counts <- add_gene_score(sv_gene_counts = sv_gene_counts)
- 
+data.table::fwrite(gene_counts, "data/SNP_VCFs/by_gene/SNP_VCFs.gene_scores.long.tsv.gz")
+
+### Save matrices 
+data_type <- "gene_scores" # gene_scores"
+mat_list <- create_gene_matrix(gene_counts = gene_counts, 
+                               data_type = data_type, 
+                               save_prefix = "data/SNP_VCFs/by_gene/SNP_VCFs")
 ```
 
 

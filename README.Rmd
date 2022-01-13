@@ -40,7 +40,7 @@ A dummy file with HERV_K insertions for all 20 MND ALS dummy subjects.
 
 <hr> 
 
-# Session info
+## Session info
 
 <details>
 
