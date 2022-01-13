@@ -42,6 +42,9 @@ Details for HERV_K insertiion pipleine: https://github.com/DEMON-NEUROHACK/Chall
 > neuron-specific biology. Nat Genet 53, 1636–1648 (2021).
 > <https://doi.org/10.1038/s41588-021-00973-1>
 
+Li. et al (2019) Human endogenous retrovirus-K contributes to motor neuron disease. Sci Transl Med. 2015 Sep 30; 7(307): 307ra153. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6344353/
+
+
 <hr>
 
 # Session info
