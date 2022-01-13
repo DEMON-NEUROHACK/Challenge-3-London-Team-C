@@ -1,11 +1,13 @@
-# To install and run Retroseq tool for prediction on HERV_K insertions:
+# Install Retroseq tool for prediction on HERV_K insertions:
 
 ```
 conda install -c bioconda samtools=0.1.19
 conda install -c hcc retroseq
+```
 
+# Run Retroseq on 20 BAMs
+```
 retroseq.pl -discover -bam BAM.bam -output discoverBAM.bed -eref c3_London_c/Dummy_HERV_K_Insertions/hervk_eref.tab -id 80
-
 retroseq.pl -call -bam BAM.bam -input discoverBAM.bed -ref REFERENCEHG19 -output BAM.vcf
 ```
 
@@ -13,15 +15,16 @@ This should result in 20 vcf files, one for each BAM.
 
 # To aggregate these into a matrix
 
+
 ```python aggregate.py > HERVKMatrixforModel.txt```
 
-Dependencies:
+Dependencies - need to be in the same directory as aggregate.py:
 ```
 list.txt
 ```
 which lists the samples
 
-And the three pythong scripts in Challenge-3-London-Team-C/data/HERVK_Insertions
+And the three python scripts in Challenge-3-London-Team-C/data/HERVK_Insertions
 ```
 aggregate.py
 combineSidewise.py
