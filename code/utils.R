@@ -375,14 +375,16 @@ create_gene_matrix <- function(gene_counts,
     groups <- unique(gene_counts[[grouping_var]])
   }
   gene_counts <- gene_counts %>% 
-    dplyr::mutate(id__type=trimws(paste(id,grouping_var,sep="__"),whitespace = "__")) #%>%
-    
+    dplyr::mutate(id__type=trimws(paste(id,grouping_var,sep="__"),
+                                  whitespace = "__")) #%>%
   #### Iterate over groups ####
   mat_list <- lapply(groups, function(group){ 
-    if(group!="all") message("Group: ",group)
-    dat <- gene_counts[get(grouping_var)==group,]
+    if(group!="all"){
+      message("Group: ",group)
+      gene_counts <- gene_counts[get(grouping_var)==group,]
+    }  
     M <- data.table::dcast.data.table(
-      data = dat, 
+      data = gene_counts, 
       # formula = id ~ SVTYPE,
       formula = stats::as.formula(formula_str),
       fun.aggregate = "mean",

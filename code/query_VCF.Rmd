@@ -243,7 +243,7 @@ mat_list <- create_gene_matrix(gene_counts = gene_counts,
 ```{r}
 all_ids <- vcfs2ids(vcfs = snp_vcfs)
 
-mat <- genotype_matrix(vcfs = snp_vcfs,
+mat_var <- genotype_matrix(vcfs = snp_vcfs,
                        save_prefix="data/SNP_VCFs/by_variant/SNP_VCFs")
 
 grl <- gather_vcfs(vcfs = snp_vcfs)
@@ -254,13 +254,13 @@ gene_counts <- get_gene_counts(gr_dt = gr_dt,
                                extract_string = "ENSG")
 gene_counts <- add_gene_length(gene_counts = gene_counts)
 gene_counts <- add_gene_score(gene_counts = gene_counts,
-                              formula_str = "GT_int ~ count + TXLENGTH + QUAL" )
+                              formula_str = "GT_int ~ count + TXLENGTH + QUAL")
 
 data.table::fwrite(gene_counts, "data/SNP_VCFs/by_gene/SNP_VCFs.gene_scores.long.tsv.gz")
 
 ### Save matrices 
 data_type <- "gene_scores" # gene_scores"
-mat_list <- create_gene_matrix(gene_counts = gene_counts, 
+mat_gene <- create_gene_matrix(gene_counts = gene_counts, 
                                data_type = data_type, 
                                save_prefix = "data/SNP_VCFs/by_gene/SNP_VCFs")
 ```
