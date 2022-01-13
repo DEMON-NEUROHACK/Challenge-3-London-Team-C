@@ -34,6 +34,15 @@ All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x variant
 **Creator**: Brian Schilder
 
 
+## SNPs: gene-level 
+
+### SNP_VCFs.gene_scores_matrix.tsv.gz 
+
+All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x gene matrix. 
+
+**Creator**: Brian Schilder
+
+
 ## Indels: variant-level
 
 ### Indel_VCFs.genotype_matrix.tsv.gz 
