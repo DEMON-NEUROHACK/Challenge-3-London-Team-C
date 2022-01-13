@@ -16,7 +16,8 @@ output:
 ### Members  
 
 ```{r}
-readx
+members <- readxl::read_excel("presentations/team_members.xlsx")
+knitr::kable(members)
 ```
 
 
@@ -66,84 +67,14 @@ Retroviral insertions were identified using the pipeline described [here](https:
 
 ### SNPs: variant-level
 
-#### SNP_VCFs.genotype_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x variant matrix. 
-
-**Creator**: Brian Schilder
-
-
 ### SNPs: gene-level 
-
-#### SNP_VCFs.gene_scores_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x gene matrix. 
-
-**Creator**: Brian Schilder
-
-
+ 
 ### Indels: variant-level
 
-#### Indel_VCFs.genotype_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *Indel_VCFs/* merged into one participant x variant matrix.  
-
-**Creator**: Brian Schilder
-
-
-### SVs: variant-level
-
-#### SV_VCFs.DEL.genotype_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x variant matrix. Deletion SVs only.  
-
-**Creator**: Brian Schilder
-
-#### SV_VCFs.DUP-TANDEM.genotype_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x variant matrix. Duplications/tandem repeat SVs only.  
-
-**Creator**: Brian Schilder
-
-#### SV_VCFs.INS.genotype_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x variant matrix. Insertion SVs only.  
-
-**Creator**: Brian Schilder
-
-#### SV_VCFs.INV.genotype_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x variant matrix. Inversion SVs only.   
-
-**Creator**: Brian Schilder 
-
+### SVs: variant-level   
 
 ### SVs: gene-level
-
-#### SV_VCFs.DEL.gene_scores_matrix.tsv.gz  
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x gene matrix. Deletion SVs only.   
-
-**Creator**: Brian Schilder  
-
-#### SV_VCFs.DUP-TANDEM.gene_scores_matrix.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x gene matrix. Duplication/tandem repeat SVs only.   
-
-**Creator**: Brian Schilder  
-
-#### SV_VCFs.INS.gene_scores_matrix.tsv.gz  
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x gene matrix. Insertion SVs only.   
-
-**Creator**: Brian Schilder  
-
-#### SV_VCFs.INV.gene_scores_matrix.tsv.gz  
-
-All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x gene matrix. Inversion SVs only.   
-
-**Creator**: Brian Schilder  
-
+   
 
 ## Methods  
 

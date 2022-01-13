@@ -10,6 +10,43 @@ README updated: <i>Jan-13-2022</i>
 
 ![](figures/logo/team_logo.pdf)
 
+### Members
+
+``` r
+members <- readxl::read_excel("presentations/team_members.xlsx")
+knitr::kable(members)
+```
+
+| Name           | Affiliation             | Expertise      | Roles |
+|:---------------|:------------------------|:---------------|:------|
+| Brian Schilder | Imperial College London | Bioinformatics |       |
+
+Evolutionary biology Neuroscience Machine learning GWAS summary
+statistics Fine-mapping eQTL colocalization Matrix decomposition
+Single-cell RNA-seq R, Python, web dev \|Team lead. SV/SNP/Indel data
+preprocessing (variant and gene levels). Presentation
+creation/presenting. \| \|Yizhou Yu \|University of Cambridge \|Bioinfo
+Wet lab (cell culture) ML SNP data Molecular modelling / virtual drug
+screening / structural bio \|Preprocessing of functional impact
+predictions from deep learning models (DeepSEA, Basenj). Virtual drug
+screening. \| \|Hanz Tantiangco \|University of Sheffield 
+\|Computational chemistry Drug discovery Deep learning (Pytorch)
+Neuroscience (some) bioinformatics Python, R \|Assist in classifier
+model design. Explore dimensionality reduction/feature prioritization
+pre-step with PCA and autencoder. \| \|Areda Elezi \|Crick Institute
+\|Bioinformatics Nexflow pipelines (RNAseq etc) Web and software dev Wet
+lab Basic ML Python \|Search for additional data modalities. Prepare
+Expansion Hunter script. \| \|Siddharth Grover \|Indian Institute of
+Technology \|Machine Learning Data Mining Python, C++ \|Assist in
+classifier model design. \| \|Davide Spalla \|Donders Institute
+\|Machine learning Neuroscience Python Data analysis/visualization
+\|Design and train classifier model. \| \|Guan Wang \|University of
+Brighton \|GWAS analysis Bulk RNA-seq data analysis (short-reads)
+Population genetics; genomics \|Preprocess combined SNP-to-gene model
+(cS2G) data. \| \|Renata Kabiljo \|King’s College London \|NGS Data
+Analysis Python, R General Bioinformatics \|Generate and preprocess
+retroviral insertion predictions. \|
+
 ### Project title
 
 Predicting ALS drug targets using integrative multi-modal machine
@@ -43,113 +80,25 @@ matrices that could be fed into our machine learning model.
 
 ### Phenotypes
 
-#### pheno\_data.tsv
-
-Participant x phenotype data for each of the 20 ALS participants.
-
-Column descriptions:  
-*iid*: Participant ID. *PheFemale\_Sex*: Sex.
-
-**Creator**: Brian Schilder
+Participant x phenotype data for each of the 20 ALS participants were
+encoded as numeric vectors and fed as input to the model. This currently
+only include sex, but can easily be expanded to other categorical or
+continuous traits as they become available.
 
 ### Retroviral insertions
 
-#### HERV\_K\_Insertions.txt
-
-A participant x region dummy file with HERV\_K insertions for all 20 MND
-ALS dummy subjects.
-
-[Additional
-info.](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md)
-
-**Creator**: Renata Kabiljo
+Retroviral insertions were identified using the pipeline described
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
 
 ### SNPs: variant-level
 
-#### SNP\_VCFs.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into one participant
-x variant matrix.
-
-**Creator**: Brian Schilder
-
 ### SNPs: gene-level
-
-#### SNP\_VCFs.gene\_scores\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into one participant
-x gene matrix.
-
-**Creator**: Brian Schilder
 
 ### Indels: variant-level
 
-#### Indel\_VCFs.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *Indel\_VCFs/* merged into one
-participant x variant matrix.
-
-**Creator**: Brian Schilder
-
 ### SVs: variant-level
 
-#### SV\_VCFs.DEL.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-variant matrix. Deletion SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.DUP-TANDEM.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-variant matrix. Duplications/tandem repeat SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.INS.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-variant matrix. Insertion SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.INV.genotype\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-variant matrix. Inversion SVs only.
-
-**Creator**: Brian Schilder
-
 ### SVs: gene-level
-
-#### SV\_VCFs.DEL.gene\_scores\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-gene matrix. Deletion SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.DUP-TANDEM.gene\_scores\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-gene matrix. Duplication/tandem repeat SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.INS.gene\_scores\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-gene matrix. Insertion SVs only.
-
-**Creator**: Brian Schilder
-
-#### SV\_VCFs.INV.gene\_scores\_matrix.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SV\_VCFs/* merged into one participant x
-gene matrix. Inversion SVs only.
-
-**Creator**: Brian Schilder
 
 ## Methods
 
@@ -273,10 +222,13 @@ utils::sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] compiler_4.1.0  magrittr_2.0.1  fastmap_1.1.0   tools_4.1.0    
-    ##  [5] htmltools_0.5.2 yaml_2.2.1      stringi_1.7.6   rmarkdown_2.11 
-    ##  [9] knitr_1.37      stringr_1.4.0   xfun_0.29       digest_0.6.29  
-    ## [13] rlang_0.4.12    evaluate_0.14
+    ##  [1] Rcpp_1.0.7       fansi_1.0.0      crayon_1.4.2     utf8_1.2.2      
+    ##  [5] digest_0.6.29    cellranger_1.1.0 lifecycle_1.0.1  magrittr_2.0.1  
+    ##  [9] evaluate_0.14    highr_0.9        pillar_1.6.4     rlang_0.4.12    
+    ## [13] stringi_1.7.6    readxl_1.3.1     vctrs_0.3.8      ellipsis_0.3.2  
+    ## [17] rmarkdown_2.11   tools_4.1.0      stringr_1.4.0    xfun_0.29       
+    ## [21] yaml_2.2.1       fastmap_1.1.0    compiler_4.1.0   pkgconfig_2.0.3 
+    ## [25] htmltools_0.5.2  knitr_1.37       tibble_3.1.6
 
 </details>
 
