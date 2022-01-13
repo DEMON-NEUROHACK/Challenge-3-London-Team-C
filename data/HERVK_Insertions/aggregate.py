@@ -12,7 +12,7 @@ lastID=""
 
 
 for file in files:
-    vcf = file.rstrip() + ".vcf"
+    vcf = file.rstrip() + ".vc"
     bed = file.rstrip() + ".bed"
     os.system("python filter.py %s %s" %(vcf,bed))
     
