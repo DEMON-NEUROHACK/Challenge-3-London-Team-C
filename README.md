@@ -29,7 +29,7 @@ This is the data from which *SNP\_VCFs.all.tsv.gz* is derived.
 
 ### HERV\_K\_Insertions.txt
 
-A dummy file with HERV\_K insertions for all 20 MND ALS dummy subjects.
+Predicted HERV\_K insertions for all 20 MND ALS subjects. Predictions were obtained by running a tool Retroseq on 20 whole genome sequences of our ALS subjects
 
 <hr>
 
