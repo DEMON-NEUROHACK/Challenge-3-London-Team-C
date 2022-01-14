@@ -255,13 +255,64 @@ gene_counts <- add_gene_length(gene_counts = gene_counts)
 gene_counts <- add_gene_score(gene_counts = gene_counts,
                               formula_str = "GT_int ~ count + TXLENGTH + QUAL")
 
-data.table::fwrite(gene_counts, "data/SNP_VCFs/by_gene/SNP_VCFs.gene_scores.long.tsv.gz")
+# data.table::fwrite(gene_counts, "data/SNP_VCFs/by_gene/SNP_VCFs.gene_scores.long.tsv.gz")
 
 ### Save matrices 
 data_type <- "gene_scores" # gene_scores"
 mat_gene <- create_gene_matrix(gene_counts = gene_counts, 
                                data_type = data_type, 
                                save_prefix = "data/SNP_VCFs/by_gene/SNP_VCFs")
+```
+
+# cS2G
+
+```{r}
+gr_dt <- data.table::fread("data/SNP_VCFs/by_variant/SNP_VCFs.merged.tsv.gz")
+cs2g <- data.table::fread("~/Downloads/merged_SNP_VCFs_cS2G_final")
+
+gr_dt[,CHR:=gsub("chr","",seqnames)]
+gr_dt[,POS:=start] 
+### Only included non-list columns
+# gr_dt <- drop_list_cols(gr_dt = gr_dt)
+
+cs2g <- cs2g %>% tidyr::separate(col = "SNP",
+                                 into = c("CHR","POS"),
+                                 sep = ":")
+cs2g[,POS:=as.integer(POS)] 
+#### Merge ####
+gr_dt_cs2g <- data.table::merge.data.table(x = gr_dt, 
+                             y = cs2g,  
+                             by = c("CHR","POS"))
+#### Map gene symbols to ensembl IDs #####
+gene_map <- gprofiler2::gconvert(query = gr_dt_cs2g$GENE,
+                                 filter_na = TRUE)
+gene_key <- stats::setNames(gene_map$target, gene_map$name)
+gr_dt_cs2g$ENSEMBL <- gene_key[gr_dt_cs2g$GENE]
+gr_dt_cs2g <- subset(gr_dt_cs2g, !is.na(ENSEMBL))
+#### Encode genotypes #####
+gr_dt_cs2g$GT_int <- get_key()[gr_dt_cs2g$GT]
+gene_counts <- gr_dt_cs2g %>% 
+    dplyr::group_by(id, ENSEMBL) %>%
+    dplyr::summarise(GT_int=mean(GT_int, na.rm=TRUE),
+                     cS2G=mean(cS2G,na.rm=TRUE)) %>%
+    data.table::data.table()
+
+gr_dt_cs2g <- add_gene_score(gene_counts = gene_counts, 
+               formula_str = "GT_int ~ cS2G" )
+
+mat <- data.table::dcast.data.table(data = gr_dt_cs2g, 
+                             formula = id ~ ENSEMBL, 
+                             value.var = "score") %>%
+    tibble::column_to_rownames("id") %>%
+      as.matrix() %>%
+      as("sparseMatrix")
+data.table::fwrite(x = data.table::data.table(as.matrix(mat), 
+                                              keep.rownames = "id"), 
+                   file = "data/SNP_VCFs/by_gene/SNP_VCFs.cS2G_scores_matrix.tsv.gz",
+                   sep = "\t")
+
+cor_mat <- cor(t(as.matrix(mat)))
+heatmap(cor_mat)
 ```
 
 

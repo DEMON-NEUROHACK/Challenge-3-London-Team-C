@@ -339,6 +339,10 @@ add_gene_length <- function(gene_counts,
 add_gene_score <- function(gene_counts,
                            formula_str = "GT_int ~ count + SVLEN + TXLENGTH + QUAL" 
                            ){ 
+  if(!"GT_int" %in% colnames(gene_counts)){
+    key <- get_key()
+    gene_counts$GT_int <- key[gene_counts$GT]
+  }
     model <- stats::lm(data = gene_counts,
                        formula = stats::as.formula(formula_str),
                        na.action = na.exclude)
@@ -451,3 +455,7 @@ createDT <- function (DF, caption = "", scrollY = 400)
   return(data)
 }
 
+drop_list_cols <- function(gr_dt){
+  classes <- sapply(gr_dt,class)
+  gr_dt[,c(names(..classes)[..classes!="AsIs"])]
+}
