@@ -399,6 +399,24 @@ we had access to
 This figure indicates the most important features that describe the
 dataset, as analysed by an autoencoder model.
 
+### Inter-individual correlations
+
+Next, we sought to assess whether the variant- and gene-level data
+modality were sufficiently different across individuals to be useful as
+classifier predictors. This is an indirect assessment approach in lieu
+of access to real participant-levle data (as opposed the dummy VCFs file
+we had access to). We computed pairwise Pearson correlations (r) across
+all individuals (repeated for each data modality separately). This
+demonstrated that most (though not all) data modalities had evidence of
+varying across individuals.
+
+**Figure**: Inter-individual correlations for 5 gene-level data
+modalities: a) structural variant (SV) inversions, b) SV deletions, c)
+gene scores derived from combined SNPs-to-genes (cS2G) model
+predictions, d) SV insertions, e) SV duplications/tandem repeats.
+
+![](figures/heatmaps/heatmaps.png)
+
 ## Therapeutics identification
 
 ### Molecular modelling / virtual screening
