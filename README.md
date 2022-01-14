@@ -376,7 +376,7 @@ models.
 
 ### Dimensionality Reduction and Ranking
 
-![](figures/insertion_rankings.png)
+![](figures/insertion_rankings.PNG)
 
 ## Conclusions
 
