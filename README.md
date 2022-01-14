@@ -246,6 +246,10 @@ are concatenated into a single vector (layer 3 in **Fig. 2** below).
 Finally, the data is further compressed to predict which phenotypic
 category each participant belongs to.
 
+**Figure 2**: Classifier model architecture.
+
+![](figures/models/classifer.png)
+
 The model is currently designed to provide categorical predictions for
 each sample: short-survival vs. long-survival, or ALS vs. control
 (depending on the data available). However, it can also easily be
@@ -268,9 +272,7 @@ All code used to create, train and evaluate the classifier model can be
 found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
 
-**Figure 2**: Classifier model architecture.
 
-![](figures/models/classifer.png)
 
 ### Therapeutics prediction
 
