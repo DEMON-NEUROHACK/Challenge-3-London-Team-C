@@ -79,9 +79,7 @@ Deep learning models have shown great promise in predicting regulatory effects f
 
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)  
 
-Retroviral insertions were identified using the pipeline described [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).  The matrix with predicted insertions is then used as one of the inputs to the classifier
-
-### Genoytpe Encodings
+Retroviral insertions were identified using the pipeline described [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md). 
 
 **Table 1**: Genotype encodings. 
 
@@ -139,10 +137,8 @@ Using the same strategy as the SNP gene-level matrices, gene-level scores were c
 
 [PCA/autoencoder description here by @Hanz]
 
-Prior to training the classifier model, dimensionality reduction and feature selection were performed on the training datasets. The purpose of this initial step is to optimise model training by only selecting the top features from the dataset. In this project, we compared PCA and autoencoders for dimensionality reduction and feature selection.
-
 The code used to run PCA can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
-The code used to create and train the autoencoder can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder_hanz.ipynb). 
+The code used to create and train the autoencoder can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb). 
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
@@ -212,7 +208,7 @@ These results indicate that the efficiency of CHEMBL4635926 to treat ALS could b
 
 ## Future directions 
 
-1.  
+1.  Estimate the size of repeats within a genome using [Expansion Hunter](https://github.com/Illumina/ExpansionHunter) by searching through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
 2. 
 3.  
  
