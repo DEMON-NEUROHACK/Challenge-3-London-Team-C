@@ -226,11 +226,11 @@ gene_counts <- get_gene_counts(gr_dt = gr_dt,
                                gene_col = "CSQ", 
                                extract_string = "ENSG")
 gene_counts <- add_gene_length(gene_counts = gene_counts)
-gene_counts <- add_gene_score(gene_counts = gene_counts)
+gene_counts <- add_gene_score(gene_counts = gene_counts,
+                              formula_str = "GT_int ~ count  + TXLENGTH")
 ### Save matrices 
 data_type <- "gene_scores" # gene_scores"
-mat_list <- create_gene_matrix(gene_counts = gene_counts,
-                               grouping_var = "SVTYPE",
+mat <- create_gene_matrix(gene_counts = gene_counts, 
                                data_type = data_type, 
                                save_prefix = "data/Indel_VCFs/by_gene/Indel_VCFs")
 # mat <- do.call("cbind", mat_list)

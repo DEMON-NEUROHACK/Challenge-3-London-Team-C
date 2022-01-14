@@ -310,6 +310,7 @@ scl <- function(x){
 add_gene_length <- function(gene_counts,
                             grouping_var = NULL  # "SVLEN"
                             ){ 
+    if(!"QUAL" %in% colnames(gene_counts)) gene_counts$QUAL <- 1
     gene_len <- gene_length(gene_list = unique(gene_counts$ensembl_gene_id))
     gene_counts2 <- gene_counts %>% 
         data.table::merge.data.table(gene_len, 

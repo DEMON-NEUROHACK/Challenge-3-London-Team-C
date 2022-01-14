@@ -36,18 +36,36 @@ All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x variant
 
 ## SNPs: gene-level 
 
+Variant-to-gene mappings were estimated by aggregating gene annotations included in each VCF file (which are primarily based on proximity and overlap). 
+
 ### SNP_VCFs.gene_scores_matrix.tsv.gz 
 
 All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x gene matrix. 
 
-**Creator**: Brian Schilder
+**Creator**: Brian Schilder 
 
+## cS2G: gene-level 
 
-## Indels: variant-level
+### SNP_VCFs.cS2G_scores_matrix.tsv.gz 
+
+All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x gene matrix.
+Variant-to-gene mappings performed using predictions from the [combined SNPs-to-genes (cS2G) model](https://www.medrxiv.org/content/10.1101/2021.08.02.21261488v1).  
+
+**Creator**: Brian Schilder 
+
+## Indels: variant-level 
+
+Variant-to-gene mappings were estimated by aggregating gene annotations included in each VCF file (which are primarily based on proximity and overlap). 
 
 ### Indel_VCFs.genotype_matrix.tsv.gz 
 
 All 20 MND ALS dummy VCFs from *Indel_VCFs/* merged into one participant x variant matrix.  
+
+**Creator**: Brian Schilder
+
+### Indel_VCFs.gene_scores_matrix.tsv.gz 
+
+All 20 MND ALS dummy VCFs from *Indel_VCFs/* merged into one participant x gene matrix.  
 
 **Creator**: Brian Schilder
 
@@ -79,7 +97,9 @@ All 20 MND ALS dummy VCFs from *SV_VCFs/* merged into one participant x variant 
 **Creator**: Brian Schilder 
 
 
-## SVs: gene-level
+## SVs: gene-level  
+
+Variant-to-gene mappings were estimated by aggregating gene annotations included in each VCF file (which are primarily based on proximity and overlap). 
 
 ### SV_VCFs.DEL.gene_scores_matrix.tsv.gz  
 
