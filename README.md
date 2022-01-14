@@ -257,6 +257,13 @@ relevant features per modality. This allows us to generate ranked lists
 of genes/variants/annotations which can be used in the candidate
 therapeutics prediction step.
 
+The model outputs consists of
+1 - a modality weigth, informing about the magnitude and the direction fo the contribution of each modality to the prediction perfromance:
+![](figures/models/modality_importance.png)
+
+2 - a contribution score for each feature in each modality, that can be used to rank feature within modality:
+[](figures/models/feature_ranking.png)
+
 All code used to create, train and evaluate the classifier model can be
 found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
