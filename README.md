@@ -19,7 +19,7 @@ data.frame(members)
     ## 1   Brian Schilder        Imperial College London
     ## 2        Yizhou Yu        University of Cambridge
     ## 3  Hanz Tantiangco       University of Sheffield 
-    ## 4      Areda Elezi                Crick Institute
+    ## 4      Areda Elezi                
     ## 5 Siddharth Grover Indian Institute of Technology
     ## 6    Davide Spalla              Donders Institute
     ## 7        Guan Wang         University of Brighton
@@ -209,10 +209,12 @@ x gene matrices.
 
 \[PCA/autoencoder description here by @Hanz\]
 
+Prior to training the classifier model, dimensionality reduction and feature selection were performed on the training datasets. The purpose of this initial step is to optimise model training by only selecting the top features from the dataset. In this project, we compared PCA and autoencoders for dimensionality reduction and feature selection.
+
 The code used to run PCA can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found
-[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb).
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder_hanz.ipynb).
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
@@ -266,6 +268,10 @@ perturbation database queries, 3. literature mining.
 
 ## Results
 
+### PCA and autoencoder
+
+![](figures/PCA-autoencoder.png)
+
 ## Conclusions
 
 1.  
@@ -274,7 +280,7 @@ perturbation database queries, 3. literature mining.
 
 ## Future directions
 
-1.  
+1.  Estimate the size of repeats within a genome using Expansion Hunter by searching through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
 2.  
 3.  
 
