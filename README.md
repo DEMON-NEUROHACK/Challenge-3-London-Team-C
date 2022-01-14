@@ -37,8 +37,14 @@ learning
 
 ## Abstract
 
-\[ALS background info\] \[our approach\] \[main findings\] [Future
-directions](#future-directions)
+Amyotrophic lateral sclerosis is a fatal neurodegenerative disease
+characterised by progressive paralysis. Curative and palliative
+treatments are however lacking. Here, we combine multiple modalities
+including functional annotations, retroviral insertions, SNP, Indels,
+structural variants, and trained a machine learning model. Through this
+deep neural network, we identified several gene targets. We then
+analysed these gene targets and identified a few drugs targets that
+could be then validated using in vivo models.
 
 ## Introduction
 
