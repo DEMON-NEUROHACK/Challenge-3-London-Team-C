@@ -268,9 +268,18 @@ perturbation database queries, 3. literature mining.
 
 ## Results
 
+### Retroviral Insertions HERV-K
+
+HERV-K prediction software has been ran on 20 whole genome sequences.
+
+![](figures/insertions.png)
+Legend: the outer circle represents known HERV-K insertions; blue dots if they are in the reference genome and red if they are not
+Circles with orange dots: subjects with long survival time
+Circles with green dots: subjects with short survival time
+
 ### PCA and autoencoder
 
-![](figures/PCA-autoencoder.png)
+![](figures/PCA-autoencoder.png = 100x100)
 
 ## Conclusions
 

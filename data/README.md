@@ -135,4 +135,10 @@ more accurate SNP-to-gene mappings. We specifically used the predictions generat
 
 See the associated [preprint](https://www.medrxiv.org/content/10.1101/2021.08.02.21261488v1) for more details, as well as the [data](https://alkesgroup.broadinstitute.org/cS2G/).
 
+## Functional annotations 
 
+### snp_geno_matrix_h3k4me3_inputForML.tsv
+
+Functional annotations of histone 3 lysine 4 methylation, predicted using deep learning, based on SNP. 
+
+**Creator**: Yizhou Yu

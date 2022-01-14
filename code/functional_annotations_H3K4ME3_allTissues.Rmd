@@ -1,0 +1,89 @@
+---
+title: "Functional annotations"
+author: Yizhou Yu
+output: html_notebook
+---
+
+
+```{r}
+snp_geno_matrix_dt = read.csv("dt/SNP_VCFs.genotype_matrix.tsv",
+                              sep = "\t")
+head(snp_geno_matrix_dt)
+```
+
+transpose
+```{r}
+ids = snp_geno_matrix_dt$id
+
+snp_geno_matrix_dt_t = as.data.frame(t(snp_geno_matrix_dt[,-1]))
+colnames(snp_geno_matrix_dt_t) <- ids
+snp_geno_matrix_dt_t$SNP <- row.names(snp_geno_matrix_dt_t)
+head(snp_geno_matrix_dt_t)
+
+```
+
+```{r}
+annot_dir = "Dey_DeepLearning/Allelic_Effect/NTS/Basenji/H3K4me3_Basenji_ABSAD_NTS_Q_MAX/annotations/"
+
+allelic_h3k4me3_files = list.files(annot_dir)
+
+allelic_h3k4me3_bind = data.frame()
+
+for (file_n in 1:length(allelic_h3k4me3_files)){
+  file_read = read.csv(paste(annot_dir,allelic_h3k4me3_files[file_n], sep = ""),
+                       sep = " ")
+  file_read = subset(file_read, select=c(SNP, AN))
+  allelic_h3k4me3_bind = rbind(allelic_h3k4me3_bind,file_read)
+}
+
+```
+
+
+```{r}
+head(allelic_h3k4me3_bind)
+```
+
+```{r}
+write.csv(allelic_h3k4me3_bind, "dt/allelic_h3k4me3_functional_annotations.csv")
+```
+
+
+```{r}
+snp_geno_matrix_merge_h3k4me3 = merge(snp_geno_matrix_dt_t,
+                                      allelic_h3k4me3_bind)
+```
+
+```{r}
+head(snp_geno_matrix_h3k4me3_out)
+snp_geno_matrix_merge_h3k4me3$SNP_h3k4me3 = paste(snp_geno_matrix_merge_h3k4me3$SNP, 
+                                                  "h3k4me3", sep = "")
+
+snp_geno_matrix_h3k4me3_clean = snp_geno_matrix_merge_h3k4me3[,2:21]
+
+snp_geno_matrix_h3k4me3_out = snp_geno_matrix_h3k4me3_clean
+
+for (coln in 1:ncol(snp_geno_matrix_h3k4me3_clean)){
+  snp_geno_matrix_h3k4me3_out[,coln] = snp_geno_matrix_h3k4me3_clean[,coln] * snp_geno_matrix_merge_h3k4me3$AN
+}
+
+```
+
+output
+```{r}
+snp_geno_matrix_h3k4me3_out_t = as.data.frame(t(snp_geno_matrix_h3k4me3_out))
+colnames(snp_geno_matrix_h3k4me3_out_t)<-snp_geno_matrix_merge_h3k4me3$SNP_h3k4me3
+snp_geno_matrix_h3k4me3_out_t$ID = row.names(snp_geno_matrix_h3k4me3_out_t)
+snp_geno_matrix_h3k4me3_out_t[1:5,1:5]
+```
+
+```{r}
+write.table(snp_geno_matrix_h3k4me3_out_t, file='snp_geno_matrix_h3k4me3_inputForML.tsv', quote=FALSE, sep='\t', row.names = FALSE)
+```
+
+
+
+
+
+
+
+
