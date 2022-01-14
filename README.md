@@ -346,9 +346,11 @@ took the top 10 most highly enriched drugs.
 #### Literature mining
 
 We next mined the literature for drug-gene co-mentions using the
-text-mining tool [Geneshot](https://maayanlab.cloud/geneshot/). The
-Geneshot API was iteratively queried for all small molecules listed in
-the [Drug Ontology
+text-mining tool [Geneshot](https://maayanlab.cloud/geneshot/).
+Co-mention frequencies are then normalised by the total number of
+mentions for a given gene, to avoid bias towrds gene that are generally
+well-studied. The Geneshot API was iteratively queried for all small
+molecules listed in the [Drug Ontology
 (DRON)](https://bioportal.bioontology.org/ontologies/DRON), which
 includes 4,146 drugs with U.S. National Drug Codes (NDCs).
 
@@ -429,9 +431,16 @@ gene signatures for 4.1k+ drugs.
 
 ## Conclusions
 
-Multi-modal genomic data integration in combination with computational
-drug target modeling is a viable means of identifying novel candidate
-therapeutics for ALS.
+1.  We created several modalities using the genetic data from [van
+    Rheenen et al.](https://www.nature.com/articles/s41588-021-00973-1),
+    also information from other previously published models.
+2.  Using deep learning, we idnetified several relevan modalities and
+    specific features.
+3.  Finally, we identified potential drugs for the genes we identified.
+
+We conclude that multi-modal genomic data integration in combination
+with computational drug target modeling is a viable means of identifying
+novel candidate therapeutics for ALS.
 
 ## Future directions
 
