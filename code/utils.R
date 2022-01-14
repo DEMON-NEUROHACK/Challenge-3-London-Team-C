@@ -422,7 +422,9 @@ create_gene_matrix <- function(gene_counts,
 
 create_corr_heatmaps <- function(mat_list,
                                  data_type,
-                                 remove_prefix = "LP6005878-DNA_"){
+                                 remove_prefix = "LP6005878-DNA_",
+                                 save_prefix=NULL#"figures/heatmaps/SV_"
+                                 ){
   cor_mat_list <- lapply(names(mat_list), function(x){
     #### corr ####
     mat <- mat_list[[x]]
@@ -434,11 +436,15 @@ create_corr_heatmaps <- function(mat_list,
     colnames(cor_mat2) <- gsub(remove_prefix,"",colnames(cor_mat2))
     rownames(cor_mat2) <- gsub(remove_prefix,"",rownames(cor_mat2))
     #### plot ####
-    path <- paste0("figures/heatmaps/SV_",
-                   gsub(":","-",x),".",data_type,".pdf")
-    grDevices::pdf(path)
+    if(!is.null(save_prefix)){
+      path <- paste0(save_prefix,
+                     gsub(":","-",x),".",data_type,".pdf")
+      grDevices::pdf(path)
+    } 
     stats::heatmap(cor_mat2, symm = TRUE)
-    grDevices::dev.off()
+    if(!is.null(save_prefix)){
+      grDevices::dev.off()  
+    }
     return(cor_mat)
   }) %>% `names<-`(names(mat_list))
   return(cor_mat_list)

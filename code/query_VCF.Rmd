@@ -264,11 +264,11 @@ mat_gene <- create_gene_matrix(gene_counts = gene_counts,
                                save_prefix = "data/SNP_VCFs/by_gene/SNP_VCFs")
 ```
 
-# cS2G
+# [cS2G](https://alkesgroup.broadinstitute.org/cS2G/cS2G_UKBB/)
 
 ```{r}
 gr_dt <- data.table::fread("data/SNP_VCFs/by_variant/SNP_VCFs.merged.tsv.gz")
-cs2g <- data.table::fread("~/Downloads/merged_SNP_VCFs_cS2G_final")
+cs2g <- data.table::fread("data/cS2G/cS2G.SNP_VCFs_subset.tsv.gz")
 
 gr_dt[,CHR:=gsub("chr","",seqnames)]
 gr_dt[,POS:=start] 
@@ -311,8 +311,9 @@ data.table::fwrite(x = data.table::data.table(as.matrix(mat),
                    file = "data/SNP_VCFs/by_gene/SNP_VCFs.cS2G_scores_matrix.tsv.gz",
                    sep = "\t")
 
-cor_mat <- cor(t(as.matrix(mat)))
-heatmap(cor_mat)
+cor_mat_list <- create_corr_heatmaps(mat_list = list(cS2G=mat),
+                                     data_type = "cS2G_scores", 
+                                     save_prefix = "figures/heatmaps/SNP") 
 ```
 
 
