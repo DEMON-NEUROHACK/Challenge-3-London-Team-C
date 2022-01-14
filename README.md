@@ -66,8 +66,28 @@ learning
 
 ## Abstract
 
-\[ALS background info\] \[our approach\] \[main findings\] [future
+\[ALS background info\] \[our approach\] \[main findings\] [Future
 directions](#future-directions)
+
+## Introduction
+
+### ALS
+
+\[ALS background info: @Siddharth Grover @Areda Elezi @Guan Wang \]
+
+### Classifier model
+
+The classifier model is an instance of a deep neural network for binary
+classification of survival status (SHORT vs LONG) from any number of
+features coming from different data modalities.
+
+The main idea is to have a model able to handle data from different data
+streams, and integrate them to make prediction about phenotypic
+outcomes. The architecture is design for extreme flexibility, making it
+straightforward to feed any number of different data streams to the
+model. Model complexity is kept to a minimum to ensure interpretability
+and good functioning in the low sampling regime, but can easily be
+extended to enhance the representational power of the model.
 
 ## Materials
 
