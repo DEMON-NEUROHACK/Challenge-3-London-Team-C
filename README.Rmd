@@ -79,7 +79,9 @@ Deep learning models have shown great promise in predicting regulatory effects f
 
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)  
 
-Retroviral insertions were identified using the pipeline described [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md). 
+Retroviral insertions were identified using the pipeline described [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).  The matrix with predicted insertions is then used as one of the inputs to the classifier
+
+### Genoytpe Encodings
 
 **Table 1**: Genotype encodings. 
 
