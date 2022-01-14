@@ -284,7 +284,7 @@ Circles with green dots: subjects with short survival time
 
 ### PCA and autoencoder
 
-![](figures/PCA-autoencoder.png | width=100)
+![](figures/PCA-autoencoder.png)
 
 ## Conclusions
 
