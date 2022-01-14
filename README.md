@@ -270,7 +270,7 @@ perturbation database queries, 3. literature mining.
 
 ### Retroviral Insertions HERV-K
 
-
+![](figures/insertions.png)
 
 ### PCA and autoencoder
 
