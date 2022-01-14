@@ -382,8 +382,8 @@ identified a new compound
 [CHEMBL4635926](https://www.ebi.ac.uk/chembl/g/#browse/compounds/filter/_metadata.related_targets.all_chembl_ids%3ACHEMBL4630819).
 Since this has not been validated, we used molecular docking
 simulations. We first used AlphaFold2 to generate a crystal sturcture of
-NAA10: [figure
-below](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/AF2_NAA10_prediction.png).
+NAA10:
+[figure](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/AF2_NAA10_prediction.png).
 We then docked the compound we identified previously (CHEMBL4635926)
 onto this predicted structure:
 [figure](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/docking_output.png).
@@ -392,7 +392,10 @@ CHEMBL4635926 binds strongly to NAA10. These results indicate that the
 efficiency of CHEMBL4635926 to treat ALS could be tested in animal
 models.
 
-![](figures/docking/docking_output.png)
+![](figures/docking/docking_output.png) **Binding conformation of
+CHEMBL4635926 on N-alpha-acetyltransferase 10** The chains of the
+proteins are coloured differently and the target drug CHEMBL4635926 is
+in purple at the centre of the image.
 
 #### Perturbation database queries
 
@@ -421,6 +424,9 @@ therapeutics for ALS.
     are fully contained in each repeat.
 2.  Improve the model to incorporate further modalities and ensure it is
     transformative to tackle other complex diseases and traits.
+3.  We only screened the binding efficiency of one ligand. Future work
+    will aim to screen drug libraries and validate those targets in
+    vivo.
 
 <hr>
 
