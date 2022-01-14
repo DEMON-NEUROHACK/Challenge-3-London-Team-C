@@ -212,6 +212,12 @@ These results indicate that the efficiency of CHEMBL4635926 to treat ALS could b
 
 ![](figures/docking/docking_output.png) 
 
+### Dimensionality Reduction and Ranking
+
+![](figures/insertion rankings.png)
+
+
+
 ## Conclusions  
 
 1.  
