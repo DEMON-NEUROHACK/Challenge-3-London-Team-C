@@ -404,11 +404,16 @@ dataset, as analysed by an autoencoder model.
 Next, we sought to assess whether the variant- and gene-level data
 modality were sufficiently different across individuals to be useful as
 classifier predictors. This is an indirect assessment approach in lieu
-of access to real participant-levle data (as opposed the dummy VCFs file
-we had access to). We computed pairwise Pearson correlations (r) across
-all individuals (repeated for each data modality separately). This
-demonstrated that most (though not all) data modalities had evidence of
-varying across individuals.
+of access to real participant-level data (as opposed the dummy VCFs file
+we had access to). Ensuring that each data modality varies across
+individuals is important because if all values across all individuals
+are essentially identical, the classifier will not be able to learn to
+distinguish phenotypic differences (e.g. LONG vs. SHORT survival time).
+
+We computed pairwise Pearson correlations (r) across all individuals
+(repeated for each data modality separately). This demonstrated that
+most (though not all) data modalities had evidence of varying across
+individuals.
 
 **Figure**: Inter-individual correlations for 5 gene-level data
 modalities: a) structural variant (SV) inversions, b) SV deletions, c)
