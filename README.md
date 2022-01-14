@@ -101,6 +101,11 @@ encoded as numeric vectors and fed as input to the model. This currently
 only include sex, but can easily be expanded to other categorical or
 continuous traits as they become available.
 
+### [Functional annotations](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/snp_geno_matrix_h3k4me3_inputForML.tsv)
+
+Deep learning models have shown great promise in predicting regulatory effects from single nucleotide polymorphisms. In this part, we used a deep learning model called Basenji, created by [Kelley et al.](https://pubmed.ncbi.nlm.nih.gov/29588361/) to predict the regulatory activity of the genes based on methylation status of histone 3 lysine 4 (H3K4M3). [Del et al.](https://www.nature.com/articles/s41467-020-18515-4) have shown that H3K4M3 status are significantly informative for diseases. We therefore hypothesise that including this information as a modality in our machine learning model will enhance its accuracy. The code developed for this part is [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/functional_annotations_H3K4ME3_allTissues.Rmd)
+
+
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
 
 Retroviral insertions were identified using the pipeline described
