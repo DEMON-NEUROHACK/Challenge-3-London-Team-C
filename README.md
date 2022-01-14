@@ -189,6 +189,8 @@ x gene matrices.
 
 \[PCA/autoencoder description here by @Hanz\]
 
+Prior to training the classifier model, dimensionality reduction and feature selection were performed on the training datasets. The purpose of this initial step is to optimise model training by only selecting the top features from the dataset. In this project, we compared PCA and autoencoders for dimensionality reduction and feature selection.
+
 The code used to run PCA can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found
