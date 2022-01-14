@@ -248,6 +248,10 @@ perturbation database queries, 3. literature mining.
 
 ## Results
 
+### PCA and autoencoder
+
+![](figures/PCA-autoencoder.png)
+
 ## Conclusions
 
 1.  
