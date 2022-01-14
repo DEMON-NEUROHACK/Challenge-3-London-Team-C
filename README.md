@@ -194,7 +194,7 @@ Prior to training the classifier model, dimensionality reduction and feature sel
 The code used to run PCA can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found
-[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb).
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder_hanz.ipynb).
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
