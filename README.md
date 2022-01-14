@@ -10,38 +10,7 @@ README updated: <i>Jan-14-2022</i>
 
 ### Members
 
-``` r
-members <- readxl::read_excel("presentations/team_members.xlsx")
-data.frame(members)
-```
-
-    ##               Name                    Affiliation
-    ## 1   Brian Schilder        Imperial College London
-    ## 2        Yizhou Yu        University of Cambridge
-    ## 3  Hanz Tantiangco       University of Sheffield 
-    ## 4      Areda Elezi                
-    ## 5 Siddharth Grover Indian Institute of Technology
-    ## 6    Davide Spalla              Donders Institute
-    ## 7        Guan Wang         University of Brighton
-    ## 8   Renata Kabiljo          King’s College London
-    ##                                                                                                                                                                                                           Expertise
-    ## 1 Bioinformatics\r\nEvolutionary biology\r\nNeuroscience\r\nMachine learning\r\nGWAS summary statistics\r\nFine-mapping\r\neQTL colocalization\r\nMatrix decomposition\r\nSingle-cell RNA-seq\r\nR, Python, web dev
-    ## 2                                                                                             Bioinfo\r\nWet lab (cell culture)\r\nML \r\nSNP data\r\nMolecular modelling / virtual drug screening / structural bio
-    ## 3                                                                                        Computational chemistry\r\nDrug discovery\r\nDeep learning (Pytorch)\r\nNeuroscience\r\n(some) bioinformatics\r\nPython, R
-    ## 4                                                                                                        Bioinformatics\r\nNexflow pipelines (RNAseq etc)\r\nWeb and software dev\r\nWet lab\r\nBasic ML \r\nPython
-    ## 5                                                                                                                                                                    Machine Learning\r\nData Mining\r\nPython, C++
-    ## 6                                                                                                                                         Machine learning\r\nNeuroscience\r\nPython\r\nData analysis/visualization
-    ## 7                                                                                                                        GWAS analysis\r\nBulk RNA-seq data analysis (short-reads)\r\nPopulation genetics; genomics
-    ## 8                                                                                                                                                          NGS Data Analysis\r\nPython, R\r\nGeneral Bioinformatics
-    ##                                                                                                                             Roles
-    ## 1                 Team lead. \r\nSV/SNP/Indel data preprocessing (variant and gene levels). \r\nPresentation creation/presenting.
-    ## 2         Preprocessing of functional impact predictions from deep learning models (DeepSEA, Basenj). \r\nVirtual drug screening.
-    ## 3 Assist in classifier model design.\r\nExplore dimensionality reduction/feature prioritization pre-step with PCA and autencoder.
-    ## 4                                                      Search for additional data modalities.\r\nPrepare Expansion Hunter script.
-    ## 5                                                                                              Assist in classifier model design.
-    ## 6                                                                                              Design and train classifier model.
-    ## 7                                                                              Preprocess combined SNP-to-gene model (cS2G) data.
-    ## 8                                                                       Generate and preprocess retroviral insertion predictions.
+![](presentations/team_members.png)
 
 ### Project title
 
@@ -58,7 +27,6 @@ learning
 
 1.  Preprocess input datasets
     -   MND\_ALS VCFs  
-    -   Predict HERV-K insertions from whole genome sequencing data (BAM files)
     -   External datasets  
 2.  Filter input features  
 3.  Train predictive model  
@@ -73,13 +41,20 @@ directions](#future-directions)
 ## Introduction
 
 ### ALS
-The complexity of amyotrophic lateral sclerosis (ALS) poses immense challenges on precisely capturing the underlying disease architecture. A most recent genomic research identified 15 risk loci in predisposition to ALS in 29,612 ALS patients (GWAS) combined with rich WGS data from 6,538 patients (van Rheenen et al. Nat. Genet. 2021). Genomics is largely a data-driven research. Recent developments in machine learning approaches highlight their flexibility in generating new biological hypotheses, compared to handcrafted methods. Here, we propose to identify potential therapeutic targets for ALS using an integrative multi-modal machine
-learning approach to not only identify molecular targets indicative of ALS status and survival time but also to create a model that can be easily adapted and implemented for other neurodegenerative diseases and beyond.
 
-### Background on HERV-K retroviral insertions
-There is increasingly strong evidence that human endogenous retroviruses play a role in the development of motor neuron disease (ALS). Both human and mouse retroviruses can cause ALS-like syndromes. Furthermore, people with ALS have been shown to have antibodies against retroviral proteins in their blood.
-Most HERVs lack function due to accumulated mutations or recombination, but the most recently acquired, HERV-K appears tens of times in the genome, and in several cases is nearly or completely intact, with genes that can be expressed as functional proteins. The location of sequences like HERV-K in the genome is variable, with the potential to disrupt genes, and the degree to which the sequences can be transcribed into protein also varies, determined by the integrity of each sequence, expression loci, and methylation marks. The genetic landscape of HERV-K insertions and how they vary between individuals is not known. An initial attempt to discover and characterize HERV insertions has been made using low genomic coverage data from the 1000 Genomes Project.
-
+Amyotrophic lateral sclerosis (ALS), also known as Motor Neuron Disease
+(MND), is a progressive neurodegenerative disease. ASL onsets in
+individuals between 55 and 70 years old, with a predominance in the male
+population and a mean survival rate of 3 to 5 years \[1\]. ALS affects
+the upper and lower motor neurons and it is clinically identified by
+weakness in spinal and bulbar muscles with atrophy, spasticity, weight
+loss and ultimately respiratory failure \[2\]. Although it is not
+usually inherited from the parents, 30 genes have been linked to the
+presence of the disease, with the GGGGCC repeat expansion of the
+*C9orf72* gene being present in 40% of European-ancestry patients \[1\].
+Current approaches for the treatment of ASL have relied on prescription
+of drugs that target cellular pathways that are responsible for
+neurodegeneration.
 
 ### Classifier model
 
@@ -109,16 +84,23 @@ continuous traits as they become available.
 
 ### [Functional annotations](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/snp_geno_matrix_h3k4me3_inputForML.tsv)
 
-Deep learning models have shown great promise in predicting regulatory effects from single nucleotide polymorphisms. In this part, we used a deep learning model called Basenji, created by [Kelley et al.](https://pubmed.ncbi.nlm.nih.gov/29588361/) to predict the regulatory activity of the genes based on methylation status of histone 3 lysine 4 (H3K4M3). [Del et al.](https://www.nature.com/articles/s41467-020-18515-4) have shown that H3K4M3 status are significantly informative for diseases. We therefore hypothesise that including this information as a modality in our machine learning model will enhance its accuracy. The code developed for this part is [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/functional_annotations_H3K4ME3_allTissues.Rmd)
-
+Deep learning models have shown great promise in predicting regulatory
+effects from single nucleotide polymorphisms. In this part, we used a
+deep learning model called Basenji, created by [Kelley et
+al.](https://pubmed.ncbi.nlm.nih.gov/29588361/) to predict the
+regulatory activity of the genes based on methylation status of histone
+3 lysine 4 (H3K4M3). [Del et
+al.](https://www.nature.com/articles/s41467-020-18515-4) have shown that
+H3K4M3 status are significantly informative for diseases. We therefore
+hypothesise that including this information as a modality in our machine
+learning model will enhance its accuracy. The code developed for this
+part is
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/functional_annotations_H3K4ME3_allTissues.Rmd)
 
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
 
-We have used an existing tool Retroseq, aimed to detect HERV-K insertions, and applied it to 20 whole genome sequences available to us.
-The pipeline is described and provided 
+Retroviral insertions were identified using the pipeline described
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
-
-###
 
 **Table 1**: Genotype encodings.
 
@@ -221,14 +203,16 @@ x gene matrices.
 
 ### Dimensionality reduction model
 
-\[PCA/autoencoder description here by @Hanz\]
-
-Prior to training the classifier model, dimensionality reduction and feature selection were performed on the training datasets. The purpose of this initial step is to optimise model training by only selecting the top features from the dataset. In this project, we compared PCA and autoencoders for dimensionality reduction and feature selection.
+Prior to training the classifier model, dimensionality reduction and
+feature selection were performed on the training datasets. The purpose
+of this initial step is to optimise model training by only selecting the
+top features from the dataset. In this project, we compared PCA and
+autoencoders for dimensionality reduction and feature selection.
 
 The code used to run PCA can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found
-[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder_hanz.ipynb).
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb).
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
@@ -261,18 +245,18 @@ relevant features per modality. This allows us to generate ranked lists
 of genes/variants/annotations which can be used in the candidate
 therapeutics prediction step.
 
-The model outputs consists of. 
-1 - a modality weigth, informing about the magnitude and the direction fo the contribution of each modality to the prediction perfromance:  
-![](figures/models/modality_importance.png). 
+The model outputs consists of. 1 - a modality weigth, informing about
+the magnitude and the direction fo the contribution of each modality to
+the prediction perfromance:  
+![](figures/models/modality_importance.png).
 
-2 - a contribution score for each feature in each modality, that can be used to rank feature within modality:  
-![](figures/models/feature_ranking.png). 
+2 - a contribution score for each feature in each modality, that can be
+used to rank feature within modality:  
+![](figures/models/feature_ranking.png).
 
 All code used to create, train and evaluate the classifier model can be
 found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
-
-
 
 ### Therapeutics prediction
 
@@ -291,25 +275,6 @@ perturbation database queries, 3. literature mining.
 
 ## Results
 
-### Retroviral Insertions HERV-K
-
-HERV-K prediction software has been ran on 20 whole genome sequences.
-
-![](figures/insertionsSmall.png)
-Circular Chromosomal Plot with predicred HERV-K Insertions
-
-Legend: the outer circle represents known HERV-K insertions; blue dots if they are in the reference genome and red if they are not
-
-Circles with orange dots: subjects with long survival time
-
-Circles with green dots: subjects with short survival time
-
-*As the facilitators executed the HERV-K prediction tools for us, they were not able to give us these individual level results. The plot is an example plot used on deidentified subjects whose whole genome sequences we had access to
-
-### PCA and autoencoder
-
-![](figures/PCA-autoencoder.png)
-
 ## Conclusions
 
 1.  
@@ -318,7 +283,7 @@ Circles with green dots: subjects with short survival time
 
 ## Future directions
 
-1.  Estimate the size of repeats within a genome using Expansion Hunter by searching through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
+1.  
 2.  
 3.  
 
@@ -326,11 +291,20 @@ Circles with green dots: subjects with short survival time
 
 ## References
 
-> van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common and
-> rare variant association analyses in amyotrophic lateral sclerosis
-> identify 15 risk loci with distinct genetic architectures and
-> neuron-specific biology. Nat Genet 53, 1636–1648 (2021).
-> <https://doi.org/10.1038/s41588-021-00973-1>
+> 1.  Marisa Cappella, Pierre-François Pradat, Giorgia Querin, Maria
+>     Biferi. Beyond the Traditional Clinical Trials for Amyotrophic
+>     Lateral Sclerosis and The Future Impact of Gene Therapy. Journal
+>     of Neuromuscular Diseases, IOS Press, 2021, 8 (1), pp.25 - 38.
+>     ff10.3233/jnd-200531ff. ffhal-03346426  
+> 2.  Miller RG, Mitchell JD, Moore DH. Riluzole for amyotrophic lateral
+>     sclerosis (ALS)/motor neuron disease (MND). Cochrane Database of
+>     Systematic Reviews 2012, Issue 3. Art. No.: CD001447. DOI:
+>     10.1002/14651858.CD001447.pub3.  
+> 3.  van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common
+>     and rare variant association analyses in amyotrophic lateral
+>     sclerosis identify 15 risk loci with distinct genetic
+>     architectures and neuron-specific biology. Nat Genet 53, 1636–1648
+>     (2021). <https://doi.org/10.1038/s41588-021-00973-1>
 
 <hr>
 
@@ -357,13 +331,10 @@ utils::sessionInfo()
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.7        fansi_1.0.0       crayon_1.4.2      utf8_1.2.2       
-    ##  [5] digest_0.6.29     cellranger_1.1.0  lifecycle_1.0.1   magrittr_2.0.1   
-    ##  [9] evaluate_0.14     pillar_1.6.4      rlang_0.4.12      stringi_1.7.6    
-    ## [13] readxl_1.3.1      data.table_1.14.2 vctrs_0.3.8       ellipsis_0.3.2   
-    ## [17] rmarkdown_2.11    tools_4.1.0       stringr_1.4.0     xfun_0.29        
-    ## [21] yaml_2.2.1        fastmap_1.1.0     compiler_4.1.0    pkgconfig_2.0.3  
-    ## [25] htmltools_0.5.2   knitr_1.37        tibble_3.1.6
+    ##  [1] compiler_4.1.0    magrittr_2.0.1    fastmap_1.1.0     tools_4.1.0      
+    ##  [5] htmltools_0.5.2   yaml_2.2.1        stringi_1.7.6     rmarkdown_2.11   
+    ##  [9] data.table_1.14.2 knitr_1.37        stringr_1.4.0     xfun_0.29        
+    ## [13] digest_0.6.29     rlang_0.4.12      evaluate_0.14
 
 </details>
 

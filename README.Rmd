@@ -11,10 +11,7 @@ output:
 
 ### Members  
 
-```{r}
-members <- readxl::read_excel("presentations/team_members.xlsx")
-data.frame(members)
-```
+![](presentations/team_members.png)
 
 ### Project title 
 
@@ -46,13 +43,9 @@ Predicting ALS drug targets using integrative multi-modal machine learning
 
 ### ALS
 
-[ALS background info: @Siddharth Grover @Areda Elezi @Guan Wang ] 
-
 Amyotrophic lateral sclerosis (ALS), also known as Motor Neuron Disease (MND), is a progressive neurodegenerative disease. ASL onsets in individuals between 55 and 70 years old, with a predominance in the male population and a mean survival rate of 3 to 5 years [1]. 
-ALS affects the upper and lower motor neurons and it is clinically identified by weakness in spinal and bulbar muscles with atrophy, spasticity, weight loss and ultimately respiratory failure [2]. Although it is not usually inherited from the parents, 30 genes have been linked to the presence of the disease, with the GGGGCC repeat expansion of the _C9orf72_ gene being present in 40% of the caucasian patients [1]. Current approaches for the treatment of ASL have relied on prescription of drugs that target cellular pathways that are responsible for neurodegeneration.
+ALS affects the upper and lower motor neurons and it is clinically identified by weakness in spinal and bulbar muscles with atrophy, spasticity, weight loss and ultimately respiratory failure [2]. Although it is not usually inherited from the parents, 30 genes have been linked to the presence of the disease, with the GGGGCC repeat expansion of the _C9orf72_ gene being present in 40% of  European-ancestry patients [1]. Current approaches for the treatment of ASL have relied on prescription of drugs that target cellular pathways that are responsible for neurodegeneration.
 
-1. Marisa Cappella, Pierre-François Pradat, Giorgia Querin, Maria Biferi. Beyond the Traditional Clinical Trials for Amyotrophic Lateral Sclerosis and The Future Impact of Gene Therapy. Journal of Neuromuscular Diseases, IOS Press, 2021, 8 (1), pp.25 - 38. ff10.3233/jnd-200531ff. ffhal-03346426
-2. Miller RG, Mitchell JD, Moore DH. Riluzole for amyotrophic lateral sclerosis (ALS)/motor neuron disease (MND). Cochrane Database of Systematic Reviews 2012, Issue 3. Art. No.: CD001447. DOI: 10.1002/14651858.CD001447.pub3.
 
 ### Classifier model 
 
@@ -66,7 +59,6 @@ Model complexity is kept to a minimum to ensure interpretability and good functi
 
 The following datatypes were prepared as numeric 
 participant x feature matrices that could be fed into our machine learning model.
-
 
 ### Phenotypes 
 
@@ -135,7 +127,7 @@ Using the same strategy as the SNP gene-level matrices, gene-level scores were c
 
 ### Dimensionality reduction model 
 
-[PCA/autoencoder description here by @Hanz]
+Prior to training the classifier model, dimensionality reduction and feature selection were performed on the training datasets. The purpose of this initial step is to optimise model training by only selecting the top features from the dataset. In this project, we compared PCA and autoencoders for dimensionality reduction and feature selection.
 
 The code used to run PCA can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb). 
@@ -203,7 +195,10 @@ therapeutics for ALS: 1. virtual screening, 2. perturbation database queries, 3.
 
 ## References 
 
-> van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common and rare variant association analyses in amyotrophic lateral sclerosis identify 15 risk loci with distinct genetic architectures and neuron-specific biology. Nat Genet 53, 1636–1648 (2021). [https://doi.org/10.1038/s41588-021-00973-1](https://doi.org/10.1038/s41588-021-00973-1) 
+> 1. Marisa Cappella, Pierre-François Pradat, Giorgia Querin, Maria Biferi. Beyond the Traditional Clinical Trials for Amyotrophic Lateral Sclerosis and The Future Impact of Gene Therapy. Journal of Neuromuscular Diseases, IOS Press, 2021, 8 (1), pp.25 - 38. ff10.3233/jnd-200531ff. ffhal-03346426  
+> 2. Miller RG, Mitchell JD, Moore DH. Riluzole for amyotrophic lateral sclerosis (ALS)/motor neuron disease (MND). Cochrane Database of Systematic Reviews 2012, Issue 3. Art. No.: CD001447. DOI: 10.1002/14651858.CD001447.pub3.  
+> 3. van Rheenen, W., van der Spek, R.A.A., Bakker, M.K. et al. Common and rare variant association analyses in amyotrophic lateral sclerosis identify 15 risk loci with distinct genetic architectures and neuron-specific biology. Nat Genet 53, 1636–1648 (2021). [https://doi.org/10.1038/s41588-021-00973-1](https://doi.org/10.1038/s41588-021-00973-1) 
+
 
 
 <hr> 
