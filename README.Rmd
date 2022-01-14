@@ -189,7 +189,7 @@ The [SigCom LINCS data portal](https://maayanlab.cloud/sigcom-lincs#/SignatureSe
 
 #### Literature mining  
 
-We next mined the literature for drug-gene co-mentions using the text-mining tool [Geneshot](https://maayanlab.cloud/geneshot/). The Geneshot API was iteratively queried for all small molecules listed in the [Drug Ontology (DRON)](https://bioportal.bioontology.org/ontologies/DRON), which includes 4,146 drugs with U.S. National Drug Codes (NDCs). 
+We next mined the literature for drug-gene co-mentions using the text-mining tool [Geneshot](https://maayanlab.cloud/geneshot/). Co-mention frequencies are then normalised by the total number of mentions for a given gene, to avoid bias towrds gene that are generally well-studied. The Geneshot API was iteratively queried for all small molecules listed in the [Drug Ontology (DRON)](https://bioportal.bioontology.org/ontologies/DRON), which includes 4,146 drugs with U.S. National Drug Codes (NDCs). 
  
 Normalized gene rank scores from our classifier model were concatenated with the gene x drug matrix produced by Geneshot. 
  
