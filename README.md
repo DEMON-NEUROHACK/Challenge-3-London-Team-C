@@ -368,7 +368,12 @@ we had access to
 
 ### Dimensionality Reduction and Ranking
 
-![](figures/Insertion%20rankings.png)
+![](figures/insertion_rankings.PNG)
+
+**Figure**: Rankings of gene insertion features using autoencoders.
+
+This figure indicates the most important features that describe the
+dataset, as analysed by an autoencoder model.
 
 ## Therapeutics identification
 

@@ -209,7 +209,11 @@ Circles with green dots: subjects with short survival time.
 
 ### Dimensionality Reduction and Ranking
 
-![](figures/Insertion rankings.png)
+![](figures/insertion_rankings.PNG)
+ 
+**Figure**: Rankings of gene insertion features using autoencoders.
+
+This figure indicates the most important features that describe the dataset, as analysed by an autoencoder model.
 
 ## Therapeutics identification 
 
