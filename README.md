@@ -319,7 +319,7 @@ Circles with green dots: subjects with short survival time
 ## Future directions
 
 1.  Estimate the size of repeats within a genome using Expansion Hunter by searching through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
-2.  Improve the model to ncorporate further modalities and ensure it is transformative to tackle other complex diseases and traits. 
+2.  Improve the model to incorporate further modalities and ensure it is transformative to tackle other complex diseases and traits. 
 
 <hr>
 
