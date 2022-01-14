@@ -14,8 +14,7 @@ if(!require(remotes)) install.packages("remotes")
 
 library(dplyr)
 library(ggplot2)
-
-root <- "/Volumes/Steelix/research/MND_ALS"
+ 
 ```
 
 # Import data
@@ -43,13 +42,72 @@ mean_ranks <- weights %>%
     dplyr::summarise(Score=mean(Score,na.rm=TRUE),
                      Rank=mean(Rank, na.rm=TRUE),
                      Rank_z=mean(Rank_z, na.rm=TRUE)) %>%
+    dplyr::arrange(dplyr::desc(Rank_z)) %>%
     data.table::data.table() %>%
     tibble::column_to_rownames("Feature_ID") %>%
     as.matrix()
 
-mean_ranks2 <- orthogene::aggregate_mapped_genes(gene_df = mean_ranks)
+mean_ranks2 <- orthogene::aggregate_mapped_genes(gene_df = mean_ranks, 
+                                                 sort_rows = FALSE,
+                                                 as_sparse = FALSE)
+mean_ranks2 <-data.table::data.table(as.matrix(mean_ranks2), 
+                                     keep.rownames = "gene")%>%
+    dplyr::arrange(dplyr::desc(Rank_z))
 
-source("code/utils.R")
-save_matrix(mat = mean_ranks2, save_prefix = "data/gene_ranks/gene_ranks")
+
+data.table::fwrite(mean_ranks2, "data/gene_ranks/gene_ranks.matrix.tsv.gz",
+                   sep="\t")
 ```
+## Find most similar drugs 
+
+### Merge model weights + Geneshot signatures 
+
+```{r}
+common_genes <- intersect(drugs$V1, mean_ranks2$gene)
+
+dat1 <- cbind(id="Rank_z",
+              mean_ranks2 %>% dplyr::select(gene, score=Rank_z))
+dat2 <- drugs %>% dplyr::select(id=search_term, gene=V1, score=gene_score)
+data.table::setkey(dat1,"gene")
+data.table::setkey(dat2,"gene")
+
+drugs_ranks <- rbind(dat1[common_genes,],
+                     dat2[common_genes,])
+mat <- data.table::dcast.data.table(data = drugs_ranks,
+                                    formula = "id ~ gene",
+                                    fill = 0,
+                                    value.var = "score") %>% 
+    tibble::column_to_rownames("id") %>% 
+    as.matrix() %>% 
+    as("sparseMatrix")
+```
+
+
+```{r}
+cor_mat <- qlcMatrix::corSparse(Matrix::t(mat)) %>% 
+    `colnames<-`(rownames(mat)) %>%
+    `rownames<-`(rownames(mat))
+cor_melt <- data.table::melt(cor_mat, value.name = "corr") %>%
+    subset(Var1=="Rank_z") %>%
+    subset(Var1!=Var2) %>%
+    dplyr::arrange(dplyr::desc(corr))
+
+data.table::fwrite(cor_melt, "data/geneshot/geneshot_drug_candidates.tsv.gz", sep="\t")
+```
+
+### Top candidates
+
+```{r}
+print(head(cor_melt,10))
+print(tail(cor_melt,10))
+
+cor_melt$Var2 <- factor(cor_melt$Var2, levels = unique(cor_melt$Var2), ordered = TRUE)
+ggplot(rbind(head(cor_melt,5),
+             tail(cor_melt,5)), aes(x=Var2, y=corr, fill=corr)) +
+    geom_bar(stat = "identity") +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust=1)) +
+    labs(title="Geneshot: candidate genes")
+```
+
 

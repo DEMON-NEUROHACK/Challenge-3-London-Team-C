@@ -58,6 +58,7 @@ learning
 
 1.  Preprocess input datasets
     -   MND\_ALS VCFs  
+    -   Predict HERV-K insertions from whole genome sequencing data (BAM files)
     -   External datasets  
 2.  Filter input features  
 3.  Train predictive model  
@@ -74,6 +75,11 @@ directions](#future-directions)
 ### ALS
 
 \[ALS background info: @Siddharth Grover @Areda Elezi @Guan Wang \]
+
+### Background on HERV-K retroviral insertions
+There is increasingly strong evidence that human endogenous retroviruses play a role in the development of motor neuron disease (ALS). Both human and mouse retroviruses can cause ALS-like syndromes. Furthermore, people with ALS have been shown to have antibodies against retroviral proteins in their blood.
+Most HERVs lack function due to accumulated mutations or recombination, but the most recently acquired, HERV-K appears tens of times in the genome, and in several cases is nearly or completely intact, with genes that can be expressed as functional proteins. The location of sequences like HERV-K in the genome is variable, with the potential to disrupt genes, and the degree to which the sequences can be transcribed into protein also varies, determined by the integrity of each sequence, expression loci, and methylation marks. The genetic landscape of HERV-K insertions and how they vary between individuals is not known. An initial attempt to discover and characterize HERV insertions has been made using low genomic coverage data from the 1000 Genomes Project.
+
 
 ### Classifier model
 
@@ -101,10 +107,18 @@ encoded as numeric vectors and fed as input to the model. This currently
 only include sex, but can easily be expanded to other categorical or
 continuous traits as they become available.
 
+### [Functional annotations](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/snp_geno_matrix_h3k4me3_inputForML.tsv)
+
+Deep learning models have shown great promise in predicting regulatory effects from single nucleotide polymorphisms. In this part, we used a deep learning model called Basenji, created by [Kelley et al.](https://pubmed.ncbi.nlm.nih.gov/29588361/) to predict the regulatory activity of the genes based on methylation status of histone 3 lysine 4 (H3K4M3). [Del et al.](https://www.nature.com/articles/s41467-020-18515-4) have shown that H3K4M3 status are significantly informative for diseases. We therefore hypothesise that including this information as a modality in our machine learning model will enhance its accuracy. The code developed for this part is [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/functional_annotations_H3K4ME3_allTissues.Rmd)
+
+
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
 
-Retroviral insertions were identified using the pipeline described
+We have used an existing tool Retroseq, aimed to detect HERV-K insertions, and applied it to 20 whole genome sequences available to us.
+The pipeline is described and provided 
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
+
+###
 
 **Table 1**: Genotype encodings.
 
@@ -232,6 +246,10 @@ are concatenated into a single vector (layer 3 in **Fig. 2** below).
 Finally, the data is further compressed to predict which phenotypic
 category each participant belongs to.
 
+**Figure 2**: Classifier model architecture.
+
+![](figures/models/classifer.png)
+
 The model is currently designed to provide categorical predictions for
 each sample: short-survival vs. long-survival, or ALS vs. control
 (depending on the data available). However, it can also easily be
@@ -243,13 +261,18 @@ relevant features per modality. This allows us to generate ranked lists
 of genes/variants/annotations which can be used in the candidate
 therapeutics prediction step.
 
+The model outputs consists of. 
+1 - a modality weigth, informing about the magnitude and the direction fo the contribution of each modality to the prediction perfromance:  
+![](figures/models/modality_importance.png). 
+
+2 - a contribution score for each feature in each modality, that can be used to rank feature within modality:  
+![](figures/models/feature_ranking.png). 
+
 All code used to create, train and evaluate the classifier model can be
 found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
 
-**Figure 2**: Classifier model architecture.
 
-![](figures/models/classifer.png)
 
 ### Therapeutics prediction
 
@@ -272,14 +295,20 @@ perturbation database queries, 3. literature mining.
 
 HERV-K prediction software has been ran on 20 whole genome sequences.
 
-![](figures/insertions.png)
+![](figures/insertionsSmall.png)
+Circular Chromosomal Plot with predicred HERV-K Insertions
+
 Legend: the outer circle represents known HERV-K insertions; blue dots if they are in the reference genome and red if they are not
+
 Circles with orange dots: subjects with long survival time
+
 Circles with green dots: subjects with short survival time
+
+*As the facilitators executed the HERV-K prediction tools for us, they were not able to give us these individual level results. The plot is an example plot used on deidentified subjects whose whole genome sequences we had access to
 
 ### PCA and autoencoder
 
-![](figures/PCA-autoencoder.png = 100x100)
+![](figures/PCA-autoencoder.png)
 
 ## Conclusions
 
