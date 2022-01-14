@@ -1,24 +1,4 @@
-One of the top gene targets we identified was N-alpha-acetyltransferase 10 or [NAA10](https://www.uniprot.org/uniprot/P41227).
-212
-Therefore, we sought to identify drugs that could interact with this protein.
-213
-We used ChEMBL to find a potential drug that might interact with NAA10,
-214
-and identified a new compound [CHEMBL4635926](https://www.ebi.ac.uk/chembl/g/#browse/compounds/filter/_metadata.related_targets.all_chembl_ids%3ACHEMBL4630819).
-215
-Since this has not been validated, we used molecular docking simulations.
-216
-We first used AlphaFold2 to generate a crystal sturcture of NAA10: [figure below](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/AF2_NAA10_prediction.png). 
-217
-We then docked the compound we identified previously (CHEMBL4635926) onto this predicted structure: [figure](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/docking_output.png). 
-218
-This lead to a docking energy of -9.2 kcal/mol, indicating that the CHEMBL4635926 binds strongly to NAA10.
-219
-These results indicate that the efficiency of CHEMBL4635926 to treat ALS could be tested in animal models.
-220
-​
-221
-![](figures/docking/docking_output.png) ---
+---
 title: "NEUROHACK 2022 "
 date: "<h4>README updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
 output:
