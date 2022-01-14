@@ -142,15 +142,25 @@ The code used to create and train the autoencoder can be found [here](https://gi
 
 Each input modality (datatype) was fed into an supervised fully-connected artificial neural network (ANN), such that each participant is a sample and each gene/variant/annotation is a feature. The inputs of the model are initially partitioned into separate "channels" of the model input, and are reduced in dimensionality by the subsequent layers. Next, the reduced representation from each modality are concatenated into a single vector (layer 3 in **Fig. 2** below). Finally, the data is further compressed to predict which phenotypic category each participant belongs to. 
 
+**Figure 2**: Classifier model architecture. 
+
+![](figures/models/classifer.png) 
+
 The model is currently designed to provide categorical predictions for each sample: short-survival vs. long-survival, or ALS vs. control (depending on the data available). However, it can also easily be adapted to continuous phenotypic data (e.g. survival years, GWAS-derived polygenic risk score (PRS)). 
 
 Once fully trained, the model can be interrogated to extract the most relevant features per modality. This allows us to generate ranked lists of genes/variants/annotations which can be used in the candidate therapeutics  prediction step. 
 
+The model outputs consists of. 
+1 - a modality weigth, informing about the magnitude and the direction fo the contribution of each modality to the prediction perfromance:  
+![](figures/models/modality_importance.png). 
+
+2 - a contribution score for each feature in each modality, that can be used to rank feature within modality:  
+![](figures/models/feature_ranking.png). 
+
+
 All code used to create, train and evaluate the classifier model can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
 
-**Figure 2**: Classifier model architecture. 
 
-![](figures/models/classifer.png) 
 
 ### Therapeutics prediction 
  
