@@ -73,8 +73,8 @@ directions](#future-directions)
 ## Introduction
 
 ### ALS
-
-\[ALS background info: @Siddharth Grover @Areda Elezi @Guan Wang \]
+The complexity of amyotrophic lateral sclerosis (ALS) poses immense challenges on precisely capturing the underlying disease architecture. A most recent genomic research identified 15 risk loci in predisposition to ALS in 29,612 ALS patients (GWAS) combined with rich WGS data from 6,538 patients (van Rheenen et al. Nat. Genet. 2021). Genomics is largely a data-driven research. Recent developments in machine learning approaches highlight their flexibility in generating new biological hypotheses, compared to handcrafted methods. Here, we propose to identify potential therapeutic targets for ALS using an integrative multi-modal machine
+learning approach to not only identify molecular targets indicative of ALS status and survival time but also to create a model that can be easily adapted and implemented for other neurodegenerative diseases and beyond.
 
 ### Background on HERV-K retroviral insertions
 There is increasingly strong evidence that human endogenous retroviruses play a role in the development of motor neuron disease (ALS). Both human and mouse retroviruses can cause ALS-like syndromes. Furthermore, people with ALS have been shown to have antibodies against retroviral proteins in their blood.
