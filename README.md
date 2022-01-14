@@ -60,27 +60,23 @@ loss and ultimately respiratory failure \[2\]. Although it is not
 usually inherited from the parents, 30 genes have been linked to the
 presence of the disease, with the GGGGCC repeat expansion of the
 *C9orf72* gene being present in 40% of European-ancestry patients \[1\].
-Current approaches for the treatment of ASL have relied on prescription
+Current approaches for the treatment of ALS have relied on prescription
 of drugs that target cellular pathways that are responsible for
 neurodegeneration.
 
-Background on HERV-K retroviral insertions There is increasingly strong
-evidence that human endogenous retroviruses play a role in the
-development of motor neuron disease (ALS). Both human and mouse
-retroviruses can cause ALS-like syndromes. Furthermore, people with ALS
-have been shown to have antibodies against retroviral proteins in their
-blood. Most HERVs lack function due to accumulated mutations or
-recombination, but the most recently acquired, HERV-K appears tens of
-times in the genome, and in several cases is nearly or completely
-intact, with genes that can be expressed as functional proteins. The
-location of sequences like HERV-K in the genome is variable, with the
-potential to disrupt genes, and the degree to which the sequences can be
-transcribed into protein also varies, determined by the integrity of
-each sequence, expression loci, and methylation marks. The genetic
-landscape of HERV-K insertions and how they vary between individuals is
-not known. An initial attempt to discover and characterize HERV
-insertions has been made using low genomic coverage data from the 1000
-Genomes Project.
+The complexity of amyotrophic lateral sclerosis (ALS) poses immense
+challenges on precisely capturing the underlying disease architecture. A
+most recent genomic research identified 15 risk loci in predisposition
+to ALS in 29,612 ALS patients (GWAS) combined with rich WGS data from
+6,538 patients (van Rheenen et al. Nat. Genet. 2021). Genomics is
+largely a data-driven research. Recent developments in machine learning
+approaches highlight their flexibility in generating new biological
+hypotheses, compared to handcrafted methods. Here, we propose to
+identify potential therapeutic targets for ALS using an integrative
+multi-modal machine learning approach to not only identify molecular
+targets indicative of ALS status and survival time but also to create a
+model that can be easily adapted and implemented for other
+neurodegenerative diseases and beyond.
 
 ### Background on HERV-K retroviral insertions
 
