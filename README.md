@@ -343,6 +343,9 @@ the bottom-10 lowest ranked genes as the “down” genes. This returned
 enrichment for thousands of drug-associated signatures, from which we
 took the top 10 most highly enriched drugs.
 
+All code used to compute mode-derived gene signatures can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/geneshot.Rmd).
+
 #### Literature mining
 
 We next mined the literature for drug-gene co-mentions using the
@@ -355,7 +358,15 @@ molecules listed in the [Drug Ontology
 includes 4,146 drugs with U.S. National Drug Codes (NDCs).
 
 Normalized gene rank scores from our classifier model were concatenated
-with the gene x drug matrix produced by Geneshot.
+with the gene x drug matrix produced by Geneshot, and pairwise Pearson’s
+correlation values (r) were computed for all combinations of signatures.
+The drugs that were most strongly correlated with our model-derived gene
+signature (both negatively and positively) served as putative
+therapeutics candidates.
+
+The code used to compute the model-derived gene signatures and compare
+them to the Geneshot drug signatures can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/geneshot.Rmd).
 
 ## Results
 
