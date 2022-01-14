@@ -316,6 +316,15 @@ have been identified, three complementary approaches will be used to
 identify candidate therapeutics for ALS: 1. virtual screening, 2.
 perturbation database queries, 3. literature mining.
 
+Raked gene signatures were computed from the classifier model by ranking
+the relative importance of each gene within each modality, z-score
+normalising these ranks within each modality (to avoid bias due to
+different numbers of genes in each modality), and then averaging the
+z-scores across all modalities to derived a vector where each gene has
+an single importance score. This model-derived gene importance signature
+was then used in the subsequent drug candidate identification
+strategies.
+
 #### Molecular modelling / virtual screening
 
 The top protein-coding gene target was selected. The inhibitor was
@@ -327,10 +336,12 @@ Vina](https://pubmed.ncbi.nlm.nih.gov/19499576/).
 
 #### Perturbation database queries
 
-The LINCS data portal was queried using the top-10 highest ranked genes
-as the “up” genes, and the bottom-10 lowest ranked genes as the “down”
-genes. This returned enrichment for thousands of drug-associated
-signatures, from which we took the top 10 most highly enriched drugs.
+The [SigCom LINCS data
+portal](https://maayanlab.cloud/sigcom-lincs#/SignatureSearch/UpDown/86fa7f90-67f6-5608-ad90-c52b4a5e010d)
+was queried using the top-10 highest ranked genes as the “up” genes, and
+the bottom-10 lowest ranked genes as the “down” genes. This returned
+enrichment for thousands of drug-associated signatures, from which we
+took the top 10 most highly enriched drugs.
 
 #### Literature mining
 
@@ -412,7 +423,7 @@ gene signature.
 #### Literature mining
 
 Top candidates nominated by similarity analysis with Geneshot-derived
-gene signatures for 5k+ drugs.
+gene signatures for 4.1k+ drugs.
 
 ![](figures/geneshot/geneshot_drugs.png)
 
