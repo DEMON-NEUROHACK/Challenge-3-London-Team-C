@@ -304,6 +304,8 @@ Circles with orange dots: subjects with long survival time
 
 Circles with green dots: subjects with short survival time
 
+*As the facilitators executed the HERV-K prediction tools for us, they were not able to give us these individual level results. The plot is an example plot used on deidentified subjects whose whole genome sequences we had access to
+
 ### PCA and autoencoder
 
 ![](figures/PCA-autoencoder.png)
