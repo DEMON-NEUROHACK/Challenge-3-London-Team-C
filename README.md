@@ -327,7 +327,22 @@ Vina](https://pubmed.ncbi.nlm.nih.gov/19499576/).
 
 #### Perturbation database queries
 
+The LINCS data portal was queried using the top-10 highest ranked genes
+as the “up” genes, and the bottom-10 lowest ranked genes as the “down”
+genes. This returned enrichment for thousands of drug-associated
+signatures, from which we took the top 10 most highly enriched drugs.
+
 #### Literature mining
+
+We next mined the literature for drug-gene co-mentions using the
+text-mining tool [Geneshot](https://maayanlab.cloud/geneshot/). The
+Geneshot API was iteratively queried for all small molecules listed in
+the [Drug Ontology
+(DRON)](https://bioportal.bioontology.org/ontologies/DRON), which
+includes 4,146 drugs with U.S. National Drug Codes (NDCs).
+
+Normalized gene rank scores from our classifier model were concatenated
+with the gene x drug matrix produced by Geneshot.
 
 ## Results
 
@@ -338,19 +353,24 @@ sequences.
 
 ![](figures/insertionsSmall.png)
 
-Circular Chromosomal Plot with predicred HERV-K Insertions
+Circular Chromosomal Plot with predicted HERV-K Insertions
 
 Legend: the outer circle represents known HERV-K insertions; blue dots
 if they are in the reference genome and red if they are not
 
-Circles with orange dots: subjects with long survival time
-
-Circles with green dots: subjects with short survival time
+Circles with orange dots: subjects with long survival time. Circles with
+green dots: subjects with short survival time.
 
 \*As the facilitators executed the HERV-K prediction tools for us, they
 were not able to give us these individual level results. The plot is an
 example plot used on deidentified subjects whose whole genome sequences
 we had access to
+
+### Dimensionality Reduction and Ranking
+
+![](figures/Insertion%20rankings.png)
+
+## Therapeutics identification
 
 ### Molecular modelling / virtual screening
 
@@ -374,15 +394,25 @@ models.
 
 ![](figures/docking/docking_output.png)
 
-### Dimensionality Reduction and Ranking
+#### Perturbation database queries
 
-![](figures/Insertion%20rankings.png)
+Top candidates identified by entering our model-derived ALS survival
+gene signature.
+
+![](figures/LINCS/LINCS_drugs.png)
+
+#### Literature mining
+
+Top candidates nominated by similarity analysis with Geneshot-derived
+gene signatures for 5k+ drugs.
+
+![](figures/geneshot/geneshot_drugs.png)
 
 ## Conclusions
 
-1.  
-2.  
-3.  
+Multi-modal genomic data integration in combination with computational
+drug target modeling is a viable means of identifying novel candidate
+therapeutics for ALS.
 
 ## Future directions
 
