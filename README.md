@@ -56,6 +56,24 @@ Current approaches for the treatment of ASL have relied on prescription
 of drugs that target cellular pathways that are responsible for
 neurodegeneration.
 
+Background on HERV-K retroviral insertions There is increasingly strong
+evidence that human endogenous retroviruses play a role in the
+development of motor neuron disease (ALS). Both human and mouse
+retroviruses can cause ALS-like syndromes. Furthermore, people with ALS
+have been shown to have antibodies against retroviral proteins in their
+blood. Most HERVs lack function due to accumulated mutations or
+recombination, but the most recently acquired, HERV-K appears tens of
+times in the genome, and in several cases is nearly or completely
+intact, with genes that can be expressed as functional proteins. The
+location of sequences like HERV-K in the genome is variable, with the
+potential to disrupt genes, and the degree to which the sequences can be
+transcribed into protein also varies, determined by the integrity of
+each sequence, expression loci, and methylation marks. The genetic
+landscape of HERV-K insertions and how they vary between individuals is
+not known. An initial attempt to discover and characterize HERV
+insertions has been made using low genomic coverage data from the 1000
+Genomes Project.
+
 ### Classifier model
 
 The classifier model is an instance of a deep neural network for binary
@@ -101,6 +119,10 @@ part is
 
 Retroviral insertions were identified using the pipeline described
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
+The matrix with predicted insertions is then used as one of the inputs
+to the classifier
+
+### Genoytpe Encodings
 
 **Table 1**: Genotype encodings.
 
@@ -265,15 +287,63 @@ have been identified, three complementary approaches will be used to
 identify candidate therapeutics for ALS: 1. virtual screening, 2.
 perturbation database queries, 3. literature mining.
 
-#### Virtual screening
+#### Molecular modelling / virtual screening
 
-\[description by @Yizhou here\]
+The top protein-coding gene target was selected. The inhibitor was
+predicted using [ChEMBL](https://pubmed.ncbi.nlm.nih.gov/32117874/). The
+structure of the protein was generated using
+[AlphaFold2](https://pubmed.ncbi.nlm.nih.gov/34293799/) and the docking
+was performed using [Autodock
+Vina](https://pubmed.ncbi.nlm.nih.gov/19499576/).
 
 #### Perturbation database queries
 
 #### Literature mining
 
 ## Results
+
+### Retroviral Insertions HERV-K
+
+**Figure**: HERV-K prediction software has been ran on 20 whole genome
+sequences.
+
+![](figures/insertionsSmall.png)
+
+Circular Chromosomal Plot with predicred HERV-K Insertions
+
+Legend: the outer circle represents known HERV-K insertions; blue dots
+if they are in the reference genome and red if they are not
+
+Circles with orange dots: subjects with long survival time
+
+Circles with green dots: subjects with short survival time
+
+\*As the facilitators executed the HERV-K prediction tools for us, they
+were not able to give us these individual level results. The plot is an
+example plot used on deidentified subjects whose whole genome sequences
+we had access to
+
+### Molecular modelling / virtual screening
+
+One of the top gene targets we identified was N-alpha-acetyltransferase
+10 or [NAA10](https://www.uniprot.org/uniprot/P41227). Therefore, we
+sought to identify drugs that could interact with this protein. We used
+ChEMBL to find a potential drug that might interact with NAA10, and
+identified a new compound
+[CHEMBL4635926](https://www.ebi.ac.uk/chembl/g/#browse/compounds/filter/_metadata.related_targets.all_chembl_ids%3ACHEMBL4630819).
+Since this has not been validated, we used molecular docking
+simulations. We first used AlphaFold2 to generate a crystal sturcture of
+NAA10: [figure
+below](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/AF2_NAA10_prediction.png).
+We then docked the compound we identified previously (CHEMBL4635926)
+onto this predicted structure:
+[figure](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/figures/docking/docking_output.png).
+This lead to a docking energy of -9.2 kcal/mol, indicating that the
+CHEMBL4635926 binds strongly to NAA10. These results indicate that the
+efficiency of CHEMBL4635926 to treat ALS could be tested in animal
+models.
+
+![](figures/docking/docking_output.png)
 
 ## Conclusions
 
@@ -283,9 +353,11 @@ perturbation database queries, 3. literature mining.
 
 ## Future directions
 
-1.  
-2.  
-3.  
+1.  Estimate the size of repeats within a genome using Expansion Hunter
+    by searching through a BAM/CRAM file for reads that span, flank, and
+    are fully contained in each repeat.
+2.  Improve the model to incorporate further modalities and ensure it is
+    transformative to tackle other complex diseases and traits.
 
 <hr>
 
