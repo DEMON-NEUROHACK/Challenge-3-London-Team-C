@@ -1,7 +1,7 @@
 ---
 title: "query_VCF"
 author: "Brian M. Schilder"
-date: "11/01/2022"
+date: "updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
 output: html_document
 ---
 

@@ -1,0 +1,55 @@
+---
+title: "geneshot"
+author: "Brian M. Schilder"
+date: "updated: <i>`r format( Sys.Date(), '%b-%d-%Y')`</i></h4>"
+output: html_document
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, root.dir = here::here())
+knitr::opts_knit$set(echo = TRUE, root.dir = here::here())
+
+if(!require(remotes)) install.packages("remotes") 
+
+
+library(dplyr)
+library(ggplot2)
+
+root <- "/Volumes/Steelix/research/MND_ALS"
+```
+
+# Import data
+
+## Geneshot results 
+
+```{r}
+drugs <- data.table::fread("~/Desktop/Geneshot_ontologies/results/Geneshot/ontology_search/geneshot.DRON.tsv.gz")
+```
+
+## Classifier model gene ranks
+
+```{r}
+files <- list.files("~/Desktop/model_output_genes", pattern = ".tsv.gz$", full.names = TRUE)
+ids <- gsub(".tsv.gz","",basename(files))
+weights <- lapply(files, function(x){
+    d <- data.table::fread(x) 
+    d$Rank_z <- scales::rescale(d$Rank)
+    return(d)
+}) %>% `names<-`(ids) %>% 
+    data.table::rbindlist(use.names = TRUE, idcol = "id")
+
+mean_ranks <- weights %>% 
+    dplyr::group_by(Feature_ID) %>% 
+    dplyr::summarise(Score=mean(Score,na.rm=TRUE),
+                     Rank=mean(Rank, na.rm=TRUE),
+                     Rank_z=mean(Rank_z, na.rm=TRUE)) %>%
+    data.table::data.table() %>%
+    tibble::column_to_rownames("Feature_ID") %>%
+    as.matrix()
+
+mean_ranks2 <- orthogene::aggregate_mapped_genes(gene_df = mean_ranks)
+
+source("code/utils.R")
+save_matrix(mat = mean_ranks2, save_prefix = "data/gene_ranks/gene_ranks")
+```
+
