@@ -117,6 +117,10 @@ R](https://rdrr.io/bioc/VariantAnnotation/man/genotypeToSnpMatrix-methods.html).
 These encodings were then merged across individuals and cast into a
 participant x variant matrix.
 
+All code for preparing variant- and gene-level matrices (for SNPs, cS2G,
+SVs , and Indel datatypes) can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.Rmd).
+
 ### [SNPs: gene-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs/by_gene)
 
 Data generated in the prior variant-level step were then aggregated to
@@ -157,13 +161,13 @@ averaged by gene.
 
 `GT_int ~ cS2G`
 
-As before, the residuals were normalised and rescaled to generate gene
-scores.
+As before, the residuals were normalised and rescaled to generate
+gene-level scores for each participant.
 
 ### [Indels: variant-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/Indel_VCFs/by_variant)
 
 Similar to the SNP variants, insertions and deletions (indels) were
-numerically encoded and cast into a particpant x variant matrix.
+numerically encoded and cast into a participant x variant matrix.
 
 ### [SVs: variant-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SV_VCFs/by_variant)
 
@@ -184,6 +188,11 @@ x gene matrices.
 ### Dimensionality reduction model
 
 \[PCA/autoencoder description here by @Hanz\]
+
+The code used to run PCA can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
+The code used to create and train the autoencoder can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb).
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
@@ -212,6 +221,10 @@ relevant features per modality. This allows us to generate ranked lists
 of genes/variants/annotations which can be used in the candidate
 therapeutics prediction step.
 
+All code used to create, train and evaluate the classifier model can be
+found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
+
 **Figure 2**: Classifier model architecture.
 
 ![](figures/models/classifer.png)
@@ -235,36 +248,15 @@ perturbation database queries, 3. literature mining.
 
 ## Conclusions
 
+1.  
+2.  
+3.  
+
 ## Future directions
 
-<hr>
-
-# File descriptions
-
-## [data/SNP\_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs)
-
-### by\_variant/
-
-### SNP\_VCFs.all.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into one participant
-x variant matrix.
-
-The matrix is filled with genotypes numerically encoded as detailed
-[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/genotype_encodings.csv).
-
-### SNP\_VCFs.merged.tsv.gz
-
-All 20 MND ALS dummy VCFs from *SNP\_VCFs/* merged into a `data.table`
-in long-format.
-
-This is the data from which *SNP\_VCFs.all.tsv.gz* is derived.
-
-## [data/HERVK\_Insertions/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
-
-### HERV\_K\_Insertions.txt
-
-A dummy file with HERV\_K insertions for all 20 MND ALS dummy subjects.
+1.  
+2.  
+3.  
 
 <hr>
 

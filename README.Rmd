@@ -67,6 +67,8 @@ data.table::fread("data/genotype_encodings.csv")
 
 For each individual, genotypes from both alleles were encoded as integer values at every SNP position (**Table 1**), following standards set by the [`snpMatrix` data class in R](https://rdrr.io/bioc/VariantAnnotation/man/genotypeToSnpMatrix-methods.html). These encodings were then merged across individuals and cast into a participant x variant matrix. 
 
+All code for preparing variant- and gene-level matrices (for SNPs, cS2G, SVs , and Indel datatypes) can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.Rmd). 
+
 ### [SNPs: gene-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs/by_gene) 
 
 Data generated in the prior variant-level step were then aggregated to generate a gene-level dataset After numerically encoding all genotypes, SNPs were mapped to genes using overlap/proximity-based annotations already included in the VCF files. Genotype encoding were then averaged to produce gene level encodings. Finally, we generated gene-level scores for each participant by estimating the encoded genotype residuals, applying z-score normalisation, and then rescaling all values from 0-1:, Residuals were computed using the following formula: 
@@ -90,11 +92,11 @@ We incorporated cS2G predictions to generate gene-level scores as follows:
 
 `GT_int ~ cS2G`  
 
-As before, the residuals were normalised and rescaled to generate gene scores.
+As before, the residuals were normalised and rescaled to generate gene-level scores for each participant.
 
 ### [Indels: variant-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/Indel_VCFs/by_variant)  
 
-Similar to the SNP variants, insertions and deletions (indels) were numerically encoded and cast into a particpant x variant matrix.  
+Similar to the SNP variants, insertions and deletions (indels) were numerically encoded and cast into a participant x variant matrix.  
 
 ### [SVs: variant-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SV_VCFs/by_variant)   
 
@@ -111,6 +113,9 @@ Using the same strategy as the SNP gene-level matrices, gene-level scores were c
 
 [PCA/autoencoder description here by @Hanz]
 
+The code used to run PCA can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
+The code used to create and train the autoencoder can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb). 
+
 **Figure 1.**: Dimensionality reduction model architecture.
 
 ![](figures/models/autoencoder.png)
@@ -122,6 +127,8 @@ Each input modality (datatype) was fed into an supervised fully-connected artifi
 The model is currently designed to provide categorical predictions for each sample: short-survival vs. long-survival, or ALS vs. control (depending on the data available). However, it can also easily be adapted to continuous phenotypic data (e.g. survival years, GWAS-derived polygenic risk score (PRS)). 
 
 Once fully trained, the model can be interrogated to extract the most relevant features per modality. This allows us to generate ranked lists of genes/variants/annotations which can be used in the candidate therapeutics  prediction step. 
+
+All code used to create, train and evaluate the classifier model can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/multimodal_classifier.ipynb).
 
 **Figure 2**: Classifier model architecture. 
 
@@ -144,37 +151,19 @@ therapeutics for ALS: 1. virtual screening, 2. perturbation database queries, 3.
  
 ## Results 
 
+
 ## Conclusions  
 
-## Future directions
+1.  
+2. 
+3.  
 
-<hr>
+## Future directions 
 
-# File descriptions 
+1.  
+2. 
+3.  
  
-## [data/SNP_VCFs/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs) 
-
-### by_variant/
-
-### SNP_VCFs.all.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into one participant x variant matrix.
-
-The matrix is filled with genotypes numerically encoded as detailed [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/genotype_encodings.csv). 
-
-### SNP_VCFs.merged.tsv.gz 
-
-All 20 MND ALS dummy VCFs from *SNP_VCFs/* merged into a `data.table` in long-format. 
-
-This is the data from which *SNP_VCFs.all.tsv.gz* is derived.  
-
-
-## [data/HERVK_Insertions/](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)  
-
-### HERV_K_Insertions.txt 
-
-A dummy file with HERV_K insertions for all 20 MND ALS dummy subjects. 
-
 
 <hr> 
 
