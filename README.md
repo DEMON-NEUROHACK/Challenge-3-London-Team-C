@@ -181,6 +181,9 @@ participant x variant matrix.
 All code for preparing variant- and gene-level matrices (for SNPs, cS2G,
 SVs , and Indel datatypes) can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.Rmd).
+In addition, a simplified, portable R script to conduct all
+preprocessing steps for all of these data modalities can be found
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.R).
 
 ### [SNPs: gene-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs/by_gene)
 

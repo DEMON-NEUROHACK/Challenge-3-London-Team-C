@@ -91,7 +91,7 @@ data.table::fread("data/genotype_encodings.csv")
 
 For each individual, genotypes from both alleles were encoded as integer values at every SNP position (**Table 1**), following standards set by the [`snpMatrix` data class in R](https://rdrr.io/bioc/VariantAnnotation/man/genotypeToSnpMatrix-methods.html). These encodings were then merged across individuals and cast into a participant x variant matrix. 
 
-All code for preparing variant- and gene-level matrices (for SNPs, cS2G, SVs , and Indel datatypes) can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.Rmd). 
+All code for preparing variant- and gene-level matrices (for SNPs, cS2G, SVs , and Indel datatypes) can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.Rmd). In addition, a simplified, portable R script to conduct all preprocessing steps for all of these data modalities can be found [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/query_VCF.R).  
 
 ### [SNPs: gene-level](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/SNP_VCFs/by_gene) 
 
