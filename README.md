@@ -19,7 +19,7 @@ data.frame(members)
     ## 1   Brian Schilder        Imperial College London
     ## 2        Yizhou Yu        University of Cambridge
     ## 3  Hanz Tantiangco       University of Sheffield 
-    ## 4      Areda Elezi                Crick Institute
+    ## 4      Areda Elezi                
     ## 5 Siddharth Grover Indian Institute of Technology
     ## 6    Davide Spalla              Donders Institute
     ## 7        Guan Wang         University of Brighton
@@ -260,7 +260,7 @@ perturbation database queries, 3. literature mining.
 
 ## Future directions
 
-1.  
+1.  Estimate the size of repeats within a genome using Expansion Hunter by searching through a BAM/CRAM file for reads that span, flank, and are fully contained in each repeat.
 2.  
 3.  
 
