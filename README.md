@@ -58,6 +58,7 @@ learning
 
 1.  Preprocess input datasets
     -   MND\_ALS VCFs  
+    -   Predict HERV-K insertions from whole genome sequencing data (BAM files)
     -   External datasets  
 2.  Filter input features  
 3.  Train predictive model  
@@ -74,6 +75,11 @@ directions](#future-directions)
 ### ALS
 
 \[ALS background info: @Siddharth Grover @Areda Elezi @Guan Wang \]
+
+### Background on HERV-K retroviral insertions
+There is increasingly strong evidence that human endogenous retroviruses play a role in the development of motor neuron disease (ALS). Both human and mouse retroviruses can cause ALS-like syndromes. Furthermore, people with ALS have been shown to have antibodies against retroviral proteins in their blood.
+Most HERVs lack function due to accumulated mutations or recombination, but the most recently acquired, HERV-K appears tens of times in the genome, and in several cases is nearly or completely intact, with genes that can be expressed as functional proteins. The location of sequences like HERV-K in the genome is variable, with the potential to disrupt genes, and the degree to which the sequences can be transcribed into protein also varies, determined by the integrity of each sequence, expression loci, and methylation marks. The genetic landscape of HERV-K insertions and how they vary between individuals is not known. An initial attempt to discover and characterize HERV insertions has been made using low genomic coverage data from the 1000 Genomes Project.
+
 
 ### Classifier model
 
@@ -108,7 +114,8 @@ Deep learning models have shown great promise in predicting regulatory effects f
 
 ### [Retroviral insertions](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/tree/main/data/HERVK_Insertions)
 
-Retroviral insertions were identified using the pipeline described
+We have used an existing tool Retroseq, aimed to detect HERV-K insertions, and applied it to 20 whole genome sequences available to us.
+The pipeline is described and provided 
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
 
 **Table 1**: Genotype encodings.
