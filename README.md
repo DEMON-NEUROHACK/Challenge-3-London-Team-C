@@ -27,6 +27,8 @@ learning
 
 1.  Preprocess input datasets
     -   MND\_ALS VCFs  
+    -   Predict HERV-K insertions from whole genome sequencing data (BAM
+        files)
     -   External datasets  
 2.  Filter input features  
 3.  Train predictive model  
@@ -62,6 +64,25 @@ development of motor neuron disease (ALS). Both human and mouse
 retroviruses can cause ALS-like syndromes. Furthermore, people with ALS
 have been shown to have antibodies against retroviral proteins in their
 blood. Most HERVs lack function due to accumulated mutations or
+recombination, but the most recently acquired, HERV-K appears tens of
+times in the genome, and in several cases is nearly or completely
+intact, with genes that can be expressed as functional proteins. The
+location of sequences like HERV-K in the genome is variable, with the
+potential to disrupt genes, and the degree to which the sequences can be
+transcribed into protein also varies, determined by the integrity of
+each sequence, expression loci, and methylation marks. The genetic
+landscape of HERV-K insertions and how they vary between individuals is
+not known. An initial attempt to discover and characterize HERV
+insertions has been made using low genomic coverage data from the 1000
+Genomes Project.
+
+### Background on HERV-K retroviral insertions
+
+There is increasingly strong evidence that human endogenous retroviruses
+play a role in the development of motor neuron disease (ALS). Both human
+and mouse retroviruses can cause ALS-like syndromes. Furthermore, people
+with ALS have been shown to have antibodies against retroviral proteins
+in their blood. Most HERVs lack function due to accumulated mutations or
 recombination, but the most recently acquired, HERV-K appears tens of
 times in the genome, and in several cases is nearly or completely
 intact, with genes that can be expressed as functional proteins. The
@@ -231,10 +252,16 @@ of this initial step is to optimise model training by only selecting the
 top features from the dataset. In this project, we compared PCA and
 autoencoders for dimensionality reduction and feature selection.
 
+Prior to training the classifier model, dimensionality reduction and
+feature selection were performed on the training datasets. The purpose
+of this initial step is to optimise model training by only selecting the
+top features from the dataset. In this project, we compared PCA and
+autoencoders for dimensionality reduction and feature selection.
+
 The code used to run PCA can be found
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/PCA.ipynb).  
 The code used to create and train the autoencoder can be found
-[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder.ipynb).
+[here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/code/autoencoder_hanz.ipynb).
 
 **Figure 1.**: Dimensionality reduction model architecture.
 
@@ -344,6 +371,10 @@ efficiency of CHEMBL4635926 to treat ALS could be tested in animal
 models.
 
 ![](figures/docking/docking_output.png)
+
+### Dimensionality Reduction and Ranking
+
+![](figures/insertion%20rankings.png)
 
 ## Conclusions
 
