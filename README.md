@@ -118,6 +118,8 @@ We have used an existing tool Retroseq, aimed to detect HERV-K insertions, and a
 The pipeline is described and provided 
 [here](https://github.com/DEMON-NEUROHACK/Challenge-3-London-Team-C/blob/main/data/HERVK_Insertions/readme.md).
 
+###
+
 **Table 1**: Genotype encodings.
 
 ``` r
@@ -284,7 +286,7 @@ perturbation database queries, 3. literature mining.
 
 HERV-K prediction software has been ran on 20 whole genome sequences.
 
-![](figures/insertions.png)
+![](figures/insertionsSmall.png)
 Legend: the outer circle represents known HERV-K insertions; blue dots if they are in the reference genome and red if they are not
 Circles with orange dots: subjects with long survival time
 Circles with green dots: subjects with short survival time
