@@ -33,6 +33,8 @@ Predicting ALS drug targets using integrative multi-modal machine learning
 4. Extract key genes
 5. Identify therapeutics
 
+![](presentations/figures/workflow.png)
+
 ## Abstract  
 
 
