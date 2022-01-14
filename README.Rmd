@@ -250,7 +250,11 @@ Top candidates nominated by similarity analysis with Geneshot-derived gene signa
 
 ## Conclusions  
 
-Multi-modal genomic data integration in combination with computational drug target modeling is a viable means of identifying novel candidate therapeutics for ALS.
+1.  We created several modalities using the genetic data from [van Rheenen et al.](https://www.nature.com/articles/s41588-021-00973-1), also information from other previously published models.
+2. Using deep learning, we idnetified several relevan modalities and specific features.
+3.  Finally, we identified potential drugs for the genes we identified.
+
+We conclude that multi-modal genomic data integration in combination with computational drug target modeling is a viable means of identifying novel candidate therapeutics for ALS.
 
 ## Future directions  
 
