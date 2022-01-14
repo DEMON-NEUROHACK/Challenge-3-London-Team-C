@@ -296,8 +296,12 @@ perturbation database queries, 3. literature mining.
 HERV-K prediction software has been ran on 20 whole genome sequences.
 
 ![](figures/insertionsSmall.png)
+Circular Chromosomal Plot with predicred HERV-K Insertions
+
 Legend: the outer circle represents known HERV-K insertions; blue dots if they are in the reference genome and red if they are not
+
 Circles with orange dots: subjects with long survival time
+
 Circles with green dots: subjects with short survival time
 
 ### PCA and autoencoder
