@@ -175,7 +175,7 @@ All code used to create, train and evaluate the classifier model can be found [h
 Once the relative importance of each gene for predicting ALS survival have been identified, three complementary approaches will be used to identify candidate 
 therapeutics for ALS: 1. virtual screening, 2. perturbation database queries, 3. literature mining. 
 
-Raked gene signatures were computed from the classifier model by ranking the relative importance of each gene within each modality, z-score normalising these ranks within each modality (to avoid bias due to different numbers of genes in each modality), and then averaging the z-scores across all modalities to derived a vector where each gene has an single importance score. This model-derived gene importance signature was then used in the subsequent drug candidate identification strategies.  
+Ranked gene signatures were computed from the classifier model by ranking the relative importance of each gene within each modality, z-score normalising these ranks within each modality (to avoid bias due to differing numbers of genes in each modality), and then averaging the z-scores across all modalities to derived a vector where each gene has an single importance score. This model-derived gene importance signature was then used in the subsequent drug candidate identification strategies.  
 
 #### Molecular modelling / virtual screening  
 
